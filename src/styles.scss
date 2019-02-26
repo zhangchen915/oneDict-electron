@@ -1,7 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
 html, body {
   margin: 0;
   padding: 0;
 
   height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 12px;
+  width: 12px
+}
+
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  background-color: #afafaf;
+  min-height: 28px
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: transparent;
+  border-left: 1px dashed rgba(255, 255, 255, 0.4);
 }
