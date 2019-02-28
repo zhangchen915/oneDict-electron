@@ -1,11 +1,11 @@
+@import '~@angular/material/theming';
+
 .sidenav-container {
   height: 100%;
   width: 100%;
   .sidenav{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
+    width: 100px;
+    background-color: mat-color($mat-grey, 900);
   }
 }
 
