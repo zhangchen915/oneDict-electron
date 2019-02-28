@@ -1,0 +1,113 @@
+// Font Family
+$body-font: "Roboto";
+
+// Font Weights
+$thin: 100;
+$light: 300;
+$regular: 400;
+$semibold: 500;
+$bold: 700;
+$ultra: 800;
+
+// Base Font
+$base-font-family: $body-font, sans-serif;
+$base-font-size: 14px;
+$base-font-weight: $regular;
+$base-line-height: 1.6em;
+
+// Colors
+$black: #000000;
+$dark-gray: rgba($black, 0.8);
+$gray: rgba($black, 0.6);
+$light-gray: rgba($black, 0.4);
+$lighter-gray: rgba($black, 0.2);
+$white: #FFFFFF;
+$accent: #4285F4;
+$primary: #2F313A;
+$secondary: #F4B142;
+
+// Form Settings
+$max-width: 600px;
+$max-height: 400px;
+$gutters: 24px;
+
+.tabs {
+  // Tabs Header
+  &-header {
+    position: relative;
+    overflow: hidden;
+
+    // Border
+    .border {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: $secondary;
+      width: auto;
+      height: 2px;
+      transition: 0.3s ease;
+    }
+
+    // List
+    ul {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      width: calc(100% - 68px);
+    }
+
+    // List Item
+    li {
+      transition: 0.3s ease;
+    }
+  }
+
+  // Tabs Nav
+  &-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px;
+    color: $white;
+    user-select: none;
+
+    // Arrows
+    i {
+      border-radius: 100%;
+      cursor: pointer;
+    }
+  }
+
+  // Tabs Content
+  &-content {
+    position: relative;
+    padding: 15px 20px;
+    transition: 0.3s ease;
+    overflow: hidden;
+
+    // Blurred Text Effect
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 1px;
+      box-shadow: 0 0 20px 10px $white;
+    }
+
+    // Tab
+    .tab {
+      display: none;
+
+      // Active
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
