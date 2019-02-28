@@ -1,24 +1,34 @@
 import 'reflect-metadata';
 import '../polyfills';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 
-import { AppRoutingModule } from './app-routing.module';
+import {AppRoutingModule} from './app-routing.module';
 
 // NG Translate
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import { ElectronService } from './providers/electron.service';
+import {ElectronService} from './providers/electron.service';
 
-import { WebviewDirective } from './directives/webview.directive';
+import {WebviewDirective} from './directives/webview.directive';
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { SearchComponent } from './components/search/search.component';
+import {AppComponent} from './app.component';
+import {MaterialModule} from './material.module';
+import {HomeComponent} from './components/home/home.component';
+import {SearchComponent} from './components/search/search.component';
+import {SidenavComponent} from './components/sidenav/sidenav.component';
+import {MessageService} from './services/message.service';
+import {ConfigService} from './services/config.service';
+import {MdictService} from './services/mdict.service';
+import {ResultApiService} from './providers/result.service';
+import {ResultComponent} from './components/result/result.component';
+
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -30,13 +40,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     WebviewDirective,
-    SearchComponent
+    SearchComponent,
+    SidenavComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
+    MaterialModule,
+    ScrollToModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -45,7 +61,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, MessageService, ConfigService, MdictService, ResultApiService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -3,24 +3,23 @@
 html, body {
   margin: 0;
   padding: 0;
-
   height: 100%;
   max-height: 100%;
+  font: 1em/1.5 "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
   overflow: hidden;
 }
 
 ::-webkit-scrollbar {
   height: 12px;
-  width: 12px
+  width: 8px
 }
 
 ::-webkit-scrollbar-thumb {
   background-clip: padding-box;
-  background-color: #afafaf;
-  min-height: 28px
+  background-color: rgba(175, 175, 175, 0.76);
+  min-height: 15px
 }
 
 ::-webkit-scrollbar-track-piece {
   background-color: transparent;
-  border-left: 1px dashed rgba(255, 255, 255, 0.4);
 }

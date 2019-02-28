@@ -1,5 +1,22 @@
 <div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+  <button mat-button class="toggle-sidenav" (click)="message.toggleSidenav()">Toggle</button>
+
+  <div [@openClose]="animationState" class="search-container">
+    <mat-form-field class="search-input">
+      <input type="text" matInput placeholder="Word" (keyup)="setWord($event)">
+      <mat-icon matSuffix>mode_edit</mat-icon>
+    </mat-form-field>
+
+    <div #list>
+      <cdk-virtual-scroll-viewport *ngIf="animationState==='1'" itemSize="10" class="search-list">
+        <div *cdkVirtualFor="let item of items" class="search-item">{{item.entry}}</div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </div>
+
+  <div class="result" *ngIf="animationState==='2'">
+    <app-result [word]="word"></app-result>
+  </div>
+
+
 </div>
