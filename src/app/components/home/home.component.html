@@ -3,8 +3,8 @@
 
   <div [@openClose]="animationState" class="search-container">
     <mat-form-field class="search-input">
-      <input type="text" matInput placeholder="Word" (keyup)="setWord($event)">
-      <mat-icon matSuffix>mode_edit</mat-icon>
+      <input type="text" matInput placeholder="请输入单词" (keyup)="setWord($event)">
+      <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
     <div #list>

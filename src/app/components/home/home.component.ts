@@ -1,38 +1,14 @@
 import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {MessageService} from '../../services/message.service';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {MdictService} from '../../services/mdict.service';
 import {Suggest, SuggestEntity, SuggestService} from '../../providers/suggest.service';
-
-const animation = trigger('openClose', [
-  state('0', style({
-    height: '60%',
-  })),
-  state('1', style({
-    height: '100%',
-  })),
-  state('2', style({
-    height: '20%',
-  })),
-  transition('0 => 1', [
-    animate('.5s')
-  ]),
-  transition('1 => 2', [
-    animate('.25s')
-  ]),
-  transition('2 => 1', [
-    animate('.5s')
-  ]),
-  transition('2 => 0', [
-    animate('.5s')
-  ]),
-]);
+import {HomeAnimation} from '../../animations/home.animation';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [animation]
+  animations: [HomeAnimation]
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   word = '';
