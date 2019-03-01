@@ -28,8 +28,9 @@ import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
 import {ResultComponent} from './components/result/result.component';
 
-import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
-import { TranslateComponent } from './components/translate/translate.component';
+import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
+import {TranslateComponent} from './components/translate/translate.component';
+import {TranslateService} from './providers/translate.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,7 +64,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, MessageService, ConfigService, MdictService, ResultApiService],
+  providers: [ElectronService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
