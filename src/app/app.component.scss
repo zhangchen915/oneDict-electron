@@ -3,9 +3,12 @@
 .sidenav-container {
   height: 100%;
   width: 100%;
-  .sidenav{
+  .sidenav {
     width: 100px;
     background-color: mat-color($mat-grey, 900);
+  }
+  main {
+    height: 100%;
   }
 }
 

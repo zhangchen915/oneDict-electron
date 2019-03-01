@@ -4,11 +4,13 @@ import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../environments/environment';
 import {MessageService} from './services/message.service';
 import {Subscription} from 'rxjs';
+import {RouterAnimation} from './animations/router.animation';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [RouterAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy {
   private sidenavState: boolean;
@@ -22,21 +24,20 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('AppConfig', AppConfig);
 
     if (electronService.isElectron()) {
-      console.log('Mode electron');
-      console.log('Electron ipcRenderer', electronService.ipcRenderer);
-      console.log('NodeJS childProcess', electronService.childProcess);
     } else {
-      console.log('Mode web');
     }
 
     this.sidenavState = this.message.sidenavState.getValue();
   }
 
-
   ngOnInit(): void {
     this.subscription = this.message.getSidenavState().subscribe(msg => {
       this.sidenavState = msg;
     });
+  }
+
+  getState(outlet) {
+    return outlet.activatedRouteData.state;
   }
 
   ngOnDestroy() {

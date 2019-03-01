@@ -3,6 +3,8 @@
     <app-sidenav></app-sidenav>
   </mat-drawer>
   <mat-drawer-content>
-    <router-outlet></router-outlet>
+    <main [@routeAnimations]="getState(outlet)">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </main>
   </mat-drawer-content>
 </mat-drawer-container>

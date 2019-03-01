@@ -19,7 +19,7 @@ export const HomeAnimation = trigger('openClose', [
   transition('2 => 1', [
     animate('.5s')
   ]),
-  transition('2 => 0', [
+  transition('* => 0', [
     animate('.5s')
   ]),
 ]);

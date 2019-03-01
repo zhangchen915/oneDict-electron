@@ -29,6 +29,7 @@ import {ResultApiService} from './providers/result.service';
 import {ResultComponent} from './components/result/result.component';
 
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { TranslateComponent } from './components/translate/translate.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective,
     SearchComponent,
     SidenavComponent,
-    ResultComponent
+    ResultComponent,
+    TranslateComponent
   ],
   imports: [
     BrowserModule,
