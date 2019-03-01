@@ -1,20 +1,21 @@
 @import '~@angular/material/theming';
-// Plus imports for other components in your app.
+
+$font-family: 'lucida grande', 'lucida sans unicode', lucida, helvetica, 'Microsoft YaHei', sans-serif;
+$custom-typography: mat-typography-config($font-family);
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat-core($custom-typography);
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $candy-app-primary: mat-palette($mat-grey);
-$candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
-
+$candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
-$candy-app-warn:    mat-palette($mat-red);
+$candy-app-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
@@ -24,13 +25,12 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 
-
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
   max-height: 100%;
-  font: 1em/1.5 "lucida grande", "lucida sans unicode", lucida, helvetica, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  font: 1em/1.5 $font-family;
   overflow: hidden;
 }
 
