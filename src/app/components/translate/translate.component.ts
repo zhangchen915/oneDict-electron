@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '../../providers/translate.service';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import {Subject, timer} from 'rxjs';
+import {debounce} from 'rxjs/operators';
 
 @Component({
   selector: 'app-translate',
@@ -15,12 +15,9 @@ export class TranslateComponent implements OnInit {
 
   constructor(private translate: TranslateService) {
     this.inputChange.pipe(
-      debounceTime(200)
+      debounce(() => timer(500))
     ).subscribe(res => {
-      this.translate.youdao(res).subscribe(res => {
-        console.log(res);
-        // this.translation = res;
-      });
+      this.translate.youdao(res).subscribe(transRes => this.translation = transRes);
     });
   }
 
