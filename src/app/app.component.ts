@@ -34,6 +34,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription = this.message.getSidenavState().subscribe(msg => {
       this.sidenavState = msg;
     });
+
+    const daily = JSON.parse(localStorage.getItem('daily'));
+    if (!daily || new Date().toDateString() !== new Date(daily.dateline).toDateString()) fetch('http://open.iciba.com/dsapi', {
+      headers: {'content-type': 'application/json'}
+    }).then(async res => {
+      localStorage.setItem('daily', await res.text());
+    });
   }
 
   getState(outlet) {
