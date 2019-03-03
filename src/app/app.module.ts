@@ -15,7 +15,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
 
-import {WebviewDirective} from './directives/webview.directive';
+import {AudioDirective} from './directives/audio.directive';
 
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
@@ -41,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective,
+    AudioDirective,
     SearchComponent,
     SidenavComponent,
     ResultComponent,
