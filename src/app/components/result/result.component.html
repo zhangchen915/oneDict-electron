@@ -11,6 +11,14 @@
   </div>
 
   <div class="tabs-content" *ngIf="res">
+    <div class="phonetic">
+      <span><mat-icon>record_voice_over</mat-icon></span>
+      <mat-chip-list>
+        <mat-chip *ngFor="let name of res.phonetic" matTooltip="{{name.type}}" [audio]="name.filename">
+          {{name.text}}</mat-chip>
+      </mat-chip-list>
+    </div>
+
     <mat-chip-list>
       <mat-chip *ngFor="let name of res.type">{{name}}</mat-chip>
     </mat-chip-list>
