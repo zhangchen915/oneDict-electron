@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ResultApiService} from '../../providers/result.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-result',
@@ -8,7 +9,12 @@ import {ResultApiService} from '../../providers/result.service';
 })
 export class ResultComponent implements OnInit {
   @Input() tab;
-  @Input() word: string;
+
+  @Input()
+  set word(word: string) {
+    this.getRes(word);
+  }
+
   res;
   tabs = ['a', 'b'];
 
@@ -16,22 +22,15 @@ export class ResultComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.api.youdao(this.word).subscribe((res: any) => {
-      const base = res.ec.word[0].trs.map(e => e.tr[0].l.i[0]);
-      const collins = res.collins.collins_entries[0];
-      let wordForm = collins.basic_entries.basic_entry[0].wordforms.wordform || [];
-      if (wordForm) wordForm = wordForm.map(e => e.word);
-      this.res = {
-        base,
-        type: res.ec.exam_type,
-        collins: {
-          star: collins.star,
-          wordForm,
-          entry: collins.entries.entry.map(e => e.tran_entry[0])
-        }
-      };
+  }
+
+  getRes(word) {
+    forkJoin(
+      this.api.youdao(word),
+      this.api.sougou(word)
+    ).subscribe(res => {
+      this.res = Object.assign(res[0], res[1]);
+      console.log(this.res);
     });
-
-
   }
 }

@@ -31,11 +31,16 @@ $max-width: 600px;
 $max-height: 400px;
 $gutters: 24px;
 
+.result-content{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .tabs {
   // Tabs Header
   &-header {
     position: relative;
-    overflow: hidden;
 
     // Border
     .border {
@@ -86,20 +91,8 @@ $gutters: 24px;
     position: relative;
     padding: 15px 20px;
     transition: 0.3s ease;
-    overflow: hidden;
-
-    // Blurred Text Effect
-    &:after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0;
-      display: block;
-      width: 100%;
-      height: 1px;
-      box-shadow: 0 0 20px 10px $white;
-    }
-
+    overflow: scroll;
+    margin: 10px;
     // Tab
     .tab {
       display: none;
