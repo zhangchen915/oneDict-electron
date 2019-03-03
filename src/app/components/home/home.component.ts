@@ -3,6 +3,8 @@ import {MessageService} from '../../services/message.service';
 import {MdictService} from '../../services/mdict.service';
 import {Suggest, SuggestEntity, SuggestService} from '../../providers/suggest.service';
 import {HomeAnimation} from '../../animations/home.animation';
+import {Subject, timer} from 'rxjs';
+import {debounce} from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +20,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }];
   listListener;
   animationState = '0';
-  private translateTimer;
+  inputChange = new Subject();
 
   @ViewChild('list') $list;
 
@@ -26,6 +28,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private message: MessageService,
               private mdict: MdictService,
               private suggest: SuggestService) {
+    this.inputChange.pipe(
+      debounce(() => timer(300))
+    ).subscribe(() => {
+      this.suggest.getSuggest(this.word).subscribe((res: Suggest) => this.items = res.data.entries);
+    });
   }
 
   ngOnInit() {
@@ -34,28 +41,20 @@ export class HomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.listListener = this.renderer.listen(this.$list.nativeElement, 'click', e => {
       if (e.target.classList.contains('search-item')) {
-        this.search(e.target.innerHTML);
+        this.word = e.target.innerHTML;
+        this.animationState = '2';
       }
     });
   }
 
-  search(word: string) {
-    if (!word) return;
-    this.word = word;
-    this.animationState = '2';
-    console.log(this.word);
+  onChange() {
+    this.animationState = '1';
+    this.inputChange.next(this.word);
   }
 
-  async setWord(e) {
-    const input = e.currentTarget.value.trim();
+  enterClick(e) {
     if (e.key === 'Enter') {
-      this.search(input);
-    } else if (this.word !== input) {
-      if (this.translateTimer) clearTimeout(this.translateTimer);
-      if (!input) return;
-      this.word = input;
-      this.animationState = '1';
-      this.translateTimer = setTimeout(() => this.suggest.getSuggest(input).subscribe((res: Suggest) => this.items = res.data.entries), 150);
+      this.animationState = '2';
     }
   }
 }
