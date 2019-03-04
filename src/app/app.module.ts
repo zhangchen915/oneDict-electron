@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import '../polyfills';
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -31,6 +31,7 @@ import {ResultComponent} from './components/result/result.component';
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateComponent} from './components/translate/translate.component';
 import {TranslateService} from './providers/translate.service';
+import {DatabaseService, initDatabase} from './services/database.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -45,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SearchComponent,
     SidenavComponent,
     ResultComponent,
-    TranslateComponent
+    TranslateComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +65,14 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => initDatabase,
+      multi: true,
+      deps: []
+    },
+    ElectronService, DatabaseService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
