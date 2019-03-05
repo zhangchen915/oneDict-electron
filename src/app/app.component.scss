@@ -8,7 +8,8 @@
     background-color: mat-color($mat-grey, 900);
   }
   main {
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
   }
 }
 
