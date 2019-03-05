@@ -3,8 +3,10 @@ import {ElectronService} from './providers/electron.service';
 import {TranslateService} from '@ngx-translate/core';
 import {AppConfig} from '../environments/environment';
 import {MessageService} from './services/message.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {RouterAnimation} from './animations/router.animation';
+import {map, pairwise, startWith, tap} from 'rxjs/operators';
+import {log} from 'util';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,7 @@ import {RouterAnimation} from './animations/router.animation';
 export class AppComponent implements OnInit, OnDestroy {
   private sidenavState: boolean;
   private subscription: Subscription;
+  routeTrigger: Observable<object>;
 
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
@@ -28,6 +31,18 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     this.sidenavState = this.message.sidenavState.getValue();
+
+    this.routeTrigger = this.message.sidenavIndex.pipe(
+      startWith(0),
+      pairwise(),
+      map(([prev, curr]) => ({
+        value: curr,
+        params: {
+          offsetEnter: prev < curr ? 100 : -100,
+          offsetLeave: prev < curr ? -100 : 100
+        }
+      })),
+    );
   }
 
   ngOnInit(): void {
@@ -41,10 +56,6 @@ export class AppComponent implements OnInit, OnDestroy {
     }).then(async res => {
       localStorage.setItem('daily', await res.text());
     });
-  }
-
-  getState(outlet) {
-    return outlet.activatedRouteData.state;
   }
 
   ngOnDestroy() {

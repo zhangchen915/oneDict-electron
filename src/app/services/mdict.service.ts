@@ -1,18 +1,19 @@
 import {Injectable} from '@angular/core';
 import {ConfigService} from './config.service';
+import {Mdict} from 'mdict-ts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MdictService {
-  lookup;
+  mdict;
 
   constructor(private config: ConfigService) {
-    // parse_mdict(this.config.getDefaultDict()).then(res => this.lookup = res);
+    // this.mdict = new Mdict('ss');
   }
 
-  getTranslation(file: File) {
-    // return parse_mdict(file);
+  getTranslation() {
+    // return this.mdict.getDefinition('hello');
   }
 
   async getReactionWord(word) {

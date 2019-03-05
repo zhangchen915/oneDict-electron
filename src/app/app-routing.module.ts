@@ -6,9 +6,9 @@ import {ConfigComponent} from './components/config/config.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent, data: {state: 'home'}},
-  {path: 'translate', component: TranslateComponent, data: {state: 'translate'}},
-  {path: 'config', component: ConfigComponent, data: {state: 'config'}}
+  {path: 'home', component: HomeComponent, data: {state: 0}},
+  {path: 'translate', component: TranslateComponent, data: {state: 1}},
+  {path: 'config', component: ConfigComponent, data: {state: 3}}
 ];
 
 @NgModule({

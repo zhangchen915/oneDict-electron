@@ -5,6 +5,7 @@ import {Suggest, SuggestEntity, SuggestService} from '../../providers/suggest.se
 import {HomeAnimation} from '../../animations/home.animation';
 import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(private renderer: Renderer2,
               private message: MessageService,
               private mdict: MdictService,
-              private suggest: SuggestService) {
+              private suggest: SuggestService,
+              private router: ActivatedRoute) {
+    router.data.subscribe(e => {
+      message.sidenavIndex.next(e.state);
+    });
+
     this.inputChange.pipe(
       debounce(() => timer(300))
     ).subscribe(() => {

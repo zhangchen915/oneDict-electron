@@ -2,6 +2,8 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {DatabaseService} from '../../services/database.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {MessageService} from '../../services/message.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-config',
@@ -16,7 +18,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   @ViewChild('file') file;
 
-  constructor(private dbService: DatabaseService, private fb: FormBuilder) {
+  constructor(private message: MessageService, private router: ActivatedRoute,
+              private dbService: DatabaseService, private fb: FormBuilder) {
+    router.data.subscribe(e => {
+      message.sidenavIndex.next(e.state);
+    });
   }
 
   addFile() {

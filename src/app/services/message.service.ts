@@ -5,7 +5,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class MessageService {
-  sidenavState = new BehaviorSubject(true);
+  sidenavState = new BehaviorSubject<boolean>(true);
+  sidenavIndex = new BehaviorSubject<number>(0);
 
   constructor() {
   }

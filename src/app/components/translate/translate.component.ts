@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {TranslateService} from '../../providers/translate.service';
 import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
+import {MessageService} from '../../services/message.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-translate',
@@ -13,7 +15,11 @@ export class TranslateComponent implements OnInit {
   translation: string;
   inputChange = new Subject();
 
-  constructor(private translate: TranslateService) {
+  constructor(private message: MessageService, private router: ActivatedRoute, private translate: TranslateService) {
+    router.data.subscribe(e => {
+      message.sidenavIndex.next(e.state);
+    });
+
     this.inputChange.pipe(
       debounce(() => timer(500))
     ).subscribe(res => {
