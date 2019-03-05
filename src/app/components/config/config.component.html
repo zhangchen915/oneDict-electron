@@ -15,12 +15,12 @@
     <div
       cdkDropList
       #todoList="cdkDropList"
-      [cdkDropListData]="todo"
+      [cdkDropListData]="showList"
       [cdkDropListConnectedTo]="[doneList]"
       class="example-list"
       (cdkDropListDropped)="drop($event)">
-      <div *ngIf="todo.length">
-        <div class="example-box" *ngFor="let item of todo" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
+      <div *ngIf="showList.length">
+        <div class="example-box" *ngFor="let item of showList" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
       </div>
     </div>
   </div>
@@ -31,12 +31,12 @@
     <div
       cdkDropList
       #doneList="cdkDropList"
-      [cdkDropListData]="done"
+      [cdkDropListData]="hideList"
       [cdkDropListConnectedTo]="[todoList]"
       class="example-list"
       (cdkDropListDropped)="drop($event)">
-      <div *ngIf="done.length">
-        <div class="example-box" *ngFor="let item of done" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
+      <div *ngIf="hideList.length">
+        <div class="example-box" *ngFor="let item of hideList" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
       </div>
     </div>
   </div>
