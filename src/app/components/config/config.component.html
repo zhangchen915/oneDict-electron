@@ -1,6 +1,16 @@
 <div class="config-content">
+  <div class="choose-file">
+    <form [formGroup]="formDoc" novalidate>
+      <mat-form-field>
+        <ngx-mat-file-input #file formControlName="basicfile" placeholder="请选择mdx字典文件" [(ngModel)]="fileInput" [accept]="'.mdx'"></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+      </mat-form-field>
+    </form>
+    <button mat-button *ngIf="!file.empty" (click)="addFile()">添加</button>
+  </div>
+
   <div class="example-container">
-    <h2>To do</h2>
+    <h2>调整字典顺序</h2>
 
     <div
       cdkDropList
@@ -16,7 +26,7 @@
   </div>
 
   <div class="example-container">
-    <h2>Done</h2>
+    <h2>将字典拖到此关闭</h2>
 
     <div
       cdkDropList
@@ -28,7 +38,6 @@
       <div *ngIf="done.length">
         <div class="example-box" *ngFor="let item of done" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
       </div>
-
     </div>
   </div>
 </div>

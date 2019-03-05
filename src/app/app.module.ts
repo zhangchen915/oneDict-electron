@@ -22,6 +22,7 @@ import {MaterialModule} from './material.module';
 import {HomeComponent} from './components/home/home.component';
 import {SearchComponent} from './components/search/search.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
+import {ConfigComponent} from './components/config/config.component';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
@@ -32,6 +33,7 @@ import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateComponent} from './components/translate/translate.component';
 import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidenavComponent,
     ResultComponent,
     TranslateComponent,
+    ConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +59,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
+    MaterialFileInputModule,
     ScrollToModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
