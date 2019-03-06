@@ -16,6 +16,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {ElectronService} from './providers/electron.service';
 
 import {AudioDirective} from './directives/audio.directive';
+import {ItalicDirective} from './directives/italic.directive';
 
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
@@ -45,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     AudioDirective,
+    ItalicDirective,
     SearchComponent,
     SidenavComponent,
     ResultComponent,
