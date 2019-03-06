@@ -61,7 +61,7 @@ async function _create(): Promise<FilesDatabase> {
   const db = await RxDB.create<FilesCollections>({
     name: 'files',
     adapter: 'idb',
-    queryChangeDetection: true
+    queryChangeDetection: false
   });
   console.log('DatabaseService: created database');
   (window as any)['db'] = db; // write to window for debugging

@@ -56,18 +56,19 @@ export class ConfigComponent implements OnInit, OnDestroy {
     this.dbService.db.file.find().exec().then(res => {
       res.forEach(e => {
         const json = e.toJSON();
-        console.log(e.use);
         json.use ? this.showList[json.use - 1] = json : this.hideList.push(json);
       });
     });
   }
 
   ngOnDestroy(): void {
-    this.showList.map((e, i) => e.use = i);
+    this.showList.map((e, i) => e.use = i + 1);
     this.hideList.map(e => e.use = 0);
     this.dbService.db.file.find().remove().then(() => {
-      this.showList.concat(this.hideList).forEach(e => this.dbService.db.file.insert(e));
+      this.showList.concat(this.hideList).forEach(async e => {
+        delete e._rev;
+        await this.dbService.db.file.insert(e);
+      });
     });
   }
-
 }
