@@ -1,15 +1,25 @@
-import {app, BrowserWindow, screen, Menu} from 'electron';
+import {app, BrowserWindow, Menu} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import contextMenu from 'electron-context-menu';
+
+contextMenu({
+  showSaveImageAs: true,
+  showInspectElement: false,
+  labels: {
+    cut: '剪切',
+    copy: '复制',
+    paste: '黏贴',
+    save: '保存',
+    saveImageAs: '图片另存为'
+  }
+});
 
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
-  const size = screen.getPrimaryDisplay().workAreaSize;
-
-  // Create the browser window.
   win = new BrowserWindow({
     width: 800,
     height: 600,
