@@ -1,4 +1,5 @@
 @import '~@angular/material/theming';
+@import '~ngx-bar-rating/themes/br-default-theme';
 
 $font-family: 'lucida grande', 'lucida sans unicode', lucida, helvetica, 'Microsoft YaHei', sans-serif;
 $custom-typography: mat-typography-config($font-family);
@@ -30,6 +31,8 @@ html, body {
   padding: 0;
   height: 100%;
   max-height: 100%;
+  border-radius: 5px;
+  background: transparent;
   font: 1em/1.5 $font-family;
   overflow: hidden;
 }
@@ -50,10 +53,10 @@ html, body {
   background-color: transparent;
 }
 
-.pointer{
+.pointer {
   cursor: pointer;
 }
 
-.select-none{
+.select-none {
   user-select: none;
 }
