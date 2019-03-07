@@ -35,6 +35,7 @@ import {TranslateComponent} from './components/translate/translate.component';
 import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
+import {BarRatingModule} from 'ngx-bar-rating';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -62,6 +63,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MaterialModule,
     MaterialFileInputModule,
+    BarRatingModule,
     ScrollToModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

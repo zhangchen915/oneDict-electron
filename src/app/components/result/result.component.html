@@ -11,6 +11,7 @@
   </div>
 
   <div class="tabs-content" *ngIf="res">
+    <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
     <div class="phonetic">
       <span><mat-icon>record_voice_over</mat-icon></span>
       <mat-chip-list>
