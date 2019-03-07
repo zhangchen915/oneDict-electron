@@ -1,9 +1,9 @@
 <div class="result-content">
-  <div class="tabs-header">
+  <div class="tabs-header select-none">
     <div class="border"></div>
-    <ul>
+    <ul *ngIf="tabs.length">
       <li class="active" [ngx-scroll-to]="resContent" matRipple>释义</li>
-      <li *ngFor="let tab of tabs" [ngx-scroll-to]="'#'+tab" matRipple>{{tab}}</li>
+      <li *ngFor="let tab of tabs" [ngx-scroll-to]="'#'+tab.name" matRipple>{{tab.name}}</li>
     </ul>
     <nav class="tabs-nav"><i class="material-icons" id="prev">&#xE314;</i><i class="material-icons"
                                                                              id="next">&#xE315;</i>
@@ -14,7 +14,7 @@
     <div class="phonetic">
       <span><mat-icon>record_voice_over</mat-icon></span>
       <mat-chip-list>
-        <mat-chip *ngFor="let name of res.phonetic" matTooltip="{{name.type}}" [audio]="name.filename">
+        <mat-chip class="pointer" *ngFor="let name of res.phonetic" matTooltip="{{name.type}}" [audio]="name.filename">
           {{name.text}}</mat-chip>
       </mat-chip-list>
     </div>
@@ -26,23 +26,31 @@
       <p *ngFor="let tr of res.base">{{tr}}</p>
     </div>
 
-    <mat-card class="">
+    <mat-card class="card" *ngIf="res.collins">
       <mat-card-header>
         <mat-card-title>科林斯</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-chip-list *ngIf="res.collins.wordForm">
-          <mat-chip *ngFor="let form of res.collins.wordForm">{{form}}</mat-chip>
+        <mat-chip-list *ngIf="res.wordForm.length">
+          <mat-chip *ngFor="let form of res.wordForm">{{form}}</mat-chip>
         </mat-chip-list>
 
         <div *ngFor="let entry of res.collins.entry">
-          <!--<span>{{entry.pos_entry.pos_tips}}</span>-->
-          <span [innerHTML]="entry.tran"></span>
+          <div *ngFor="let e of entry.tran_entry">
+            <div *ngIf="e.tran">
+              <div [innerHTML]="e.tran"></div>
+              <div class="example-content" *ngFor="let sent of e.exam_sents.sent">
+                <div>{{sent.eng_sent}}</div>
+                <div>{{sent.chn_sent}}</div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </mat-card-content>
     </mat-card>
 
-    <mat-card class="">
+    <mat-card class="card">
       <mat-card-header>
         <mat-card-title>牛津</mat-card-title>
       </mat-card-header>
@@ -50,26 +58,28 @@
         <div [innerHTML]="res.phrases"></div>
         <div *ngFor="let content of res.content">
           <div>{{content.item.pos}}</div>
+
           <div *ngFor="let core of content.item.core">
-            <div>{{core.detail.en}}</div>
+            <div [italic]="core.detail.en"></div>
             <div>{{core.detail.zh}}</div>
-            <div>
-              <div>example</div>
-              <div *ngFor="let example of core.example">
-                <div [innerHTML]="example.en"></div>
-                <div>{{example.zh}}</div>
+            <div class="example-content" *ngFor="let example of core.example">
+              <div [italic]="example.en"></div>
+              <div>{{example.zh}}</div>
+            </div>
+            <div class="branch" *ngIf="core.branch">
+              <div *ngFor="let branch of core.branch">
+                <div>{{branch.detail.en}}</div>
+                <div>{{branch.detail.zh}}</div>
+                <div class="example-content" *ngFor="let example of branch.example">
+                  <div [italic]="example.en"></div>
+                  <div>{{example.zh}}</div>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </mat-card-content>
     </mat-card>
-
-    <div id="a">
-      111111111111111111111111111111111111111
-    </div>
-    <div id="b">
-      111111111111111111111111111111111111111
-    </div>
   </div>
 </div>

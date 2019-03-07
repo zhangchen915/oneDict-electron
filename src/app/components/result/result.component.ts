@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ResultApiService} from '../../providers/result.service';
 import {forkJoin} from 'rxjs';
+import {DatabaseService} from '../../services/database.service';
 
 @Component({
   selector: 'app-result',
@@ -16,9 +17,11 @@ export class ResultComponent implements OnInit {
   }
 
   res;
-  tabs = ['a', 'b'];
+  tabs = [];
 
-  constructor(private api: ResultApiService) {
+  constructor(private api: ResultApiService, private dbService: DatabaseService) {
+    this.dbService.db.file.find().where('use').gt(0).exec().then(
+      res => res.forEach(e => this.tabs.push(e.toJSON())));
   }
 
   async ngOnInit() {
@@ -30,7 +33,6 @@ export class ResultComponent implements OnInit {
       this.api.sougou(word)
     ).subscribe(res => {
       this.res = Object.assign(res[0], res[1]);
-      console.log(this.res);
     });
   }
 }

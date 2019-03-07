@@ -45,8 +45,16 @@ export class ResultApiService {
       retry(2),
       map((res: any) => {
           let wordForm = [];
+          let collins: any = false;
           const base = res.ec.word[0].trs.map(e => e.tr[0].l.i[0]);
-          const collins = res.collins.collins_entries[0];
+          if (res.collins) {
+            const entries = res.collins.collins_entries[0];
+            collins = {
+              star: entries.star,
+              entry: entries.entries.entry
+            };
+          }
+
           try {
             wordForm = collins.basic_entries.basic_entry[0].wordforms.wordform.map(e => e.word);
           } catch (e) {
@@ -54,12 +62,9 @@ export class ResultApiService {
 
           return {
             base,
+            wordForm,
             type: res.ec.exam_type,
-            collins: {
-              star: collins.star,
-              wordForm,
-              entry: collins.entries.entry.map(e => e.tran_entry[0])
-            }
+            collins
           };
         }
       ));
