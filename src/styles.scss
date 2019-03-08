@@ -35,6 +35,7 @@ html, body {
   background: transparent;
   font: 1em/1.5 $font-family;
   overflow: hidden;
+  user-select: none;
 }
 
 ::-webkit-scrollbar {
@@ -53,10 +54,16 @@ html, body {
   background-color: transparent;
 }
 
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .pointer {
   cursor: pointer;
 }
 
-.select-none {
-  user-select: none;
+.selectable {
+  user-select: text;
 }

@@ -1,0 +1,29 @@
+.tabs {
+  position: relative;
+  border-radius: 4px;
+  height: 38px;
+
+  margin: 10px 0;
+  //box-shadow: 0 0 30px rgba($black, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
+
+  li {
+    height: inherit;
+    text-align: center;
+    line-height: 38px;
+    max-width: 75px;
+    display: inline-block;
+    padding: 0 5px;
+  }
+
+  .border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: auto;
+    height: 2px;
+    background: white;
+    transition: 0.3s ease;
+  }
+}

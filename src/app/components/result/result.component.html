@@ -1,16 +1,7 @@
 <div class="result-content">
-  <div class="tabs-header select-none">
-    <div class="border"></div>
-    <ul *ngIf="tabs.length">
-      <li class="active" [ngx-scroll-to]="resContent" matRipple>释义</li>
-      <li *ngFor="let tab of tabs" [ngx-scroll-to]="'#'+tab.name" matRipple>{{tab.name}}</li>
-    </ul>
-    <nav class="tabs-nav"><i class="material-icons" id="prev">&#xE314;</i><i class="material-icons"
-                                                                             id="next">&#xE315;</i>
-    </nav>
-  </div>
+  <app-tab [tabs]="tabs"></app-tab>
 
-  <div class="tabs-content" *ngIf="res">
+  <div class="tabs-content selectable" *ngIf="res">
     <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
     <div class="phonetic">
       <span><mat-icon>record_voice_over</mat-icon></span>

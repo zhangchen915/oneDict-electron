@@ -29,6 +29,7 @@ import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
 import {ResultComponent} from './components/result/result.component';
+import {TabComponent} from './components/result/tab/tab.component';
 
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateComponent} from './components/translate/translate.component';
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidenavComponent,
     ResultComponent,
     TranslateComponent,
-    ConfigComponent
+    ConfigComponent,
+    TabComponent
   ],
   imports: [
     BrowserModule,
