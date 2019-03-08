@@ -1,7 +1,7 @@
 <div class="result-content">
   <app-tab [tabs]="tabs"></app-tab>
 
-  <div class="tabs-content selectable" *ngIf="res">
+  <div class="result selectable" *ngIf="res">
     <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
     <div class="phonetic">
       <span><mat-icon>record_voice_over</mat-icon></span>
@@ -31,9 +31,11 @@
           <div *ngFor="let e of entry.tran_entry">
             <div *ngIf="e.tran">
               <div [innerHTML]="e.tran"></div>
-              <div class="example-content" *ngFor="let sent of e.exam_sents.sent">
-                <div>{{sent.eng_sent}}</div>
-                <div>{{sent.chn_sent}}</div>
+              <div *ngIf="e.exam_sents">
+                <div class="example-content" *ngFor="let sent of e.exam_sents.sent">
+                  <div>{{sent.eng_sent}}</div>
+                  <div>{{sent.chn_sent}}</div>
+                </div>
               </div>
             </div>
           </div>

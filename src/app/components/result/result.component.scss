@@ -2,79 +2,19 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-}
 
-.tabs {
-  // Tabs Header
-  &-header {
-    position: relative;
-
-    // Border
-    .border {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: auto;
-      height: 2px;
-      transition: 0.3s ease;
-    }
-
-    // List
-    ul {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      width: calc(100% - 68px);
-    }
-
-    // List Item
-    li {
-      transition: 0.3s ease;
-    }
-  }
-
-  // Tabs Nav
-  &-nav {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    align-items: center;
-    height: 100%;
+  .result {
+    overflow-y: scroll;
+    overflow-x: hidden;
     padding: 0 10px;
-    user-select: none;
-
-    // Arrows
-    i {
-      border-radius: 100%;
-      cursor: pointer;
-    }
   }
 
-  // Tabs Content
-  &-content {
-    position: relative;
-    padding: 15px 20px;
-    transition: 0.3s ease;
-    overflow: scroll;
-    margin: 10px;
-    // Tab
-    .tab {
-      display: none;
+  .card {
+    margin-bottom: 15px;
 
-      // Active
-      &.active {
-        display: block;
-      }
-    }
-
-    .card {
-      margin-bottom: 15px;
-
-      .example-content {
-        color: #cccccc;
-        margin-bottom: 10px;
-      }
+    .example-content {
+      color: #cccccc;
+      margin-bottom: 10px;
     }
   }
 }
