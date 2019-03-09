@@ -17,6 +17,7 @@
     border-radius: 50%;
     cursor: pointer;
     outline: none;
+    -webkit-app-region: no-drag;
 
     mat-icon {
       width: inherit;
