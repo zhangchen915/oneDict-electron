@@ -8,14 +8,24 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <div #list>
+    <div #list class="suggest-content">
       <cdk-virtual-scroll-viewport *ngIf="animationState==='1'" itemSize="10" class="search-list">
-        <div *cdkVirtualFor="let item of items" class="search-item">{{item.entry}}</div>
+        <div *cdkVirtualFor="let item of items" class="search-item">{{item.key}}</div>
       </cdk-virtual-scroll-viewport>
     </div>
   </div>
 
+
   <div class="result" *ngIf="animationState==='2'">
     <app-result [word]="word"></app-result>
   </div>
+
+  <div class="daily-content" *ngIf="animationState==='0'">
+    <img [src]="daily.picture2">
+    <div class="daily">
+      <p>{{daily.content}}</p>
+      <p>{{daily.note}}</p>
+    </div>
+  </div>
+
 </div>

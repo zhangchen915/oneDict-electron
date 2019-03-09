@@ -5,8 +5,8 @@ import {AppConfig} from '../environments/environment';
 import {MessageService} from './services/message.service';
 import {Observable, Subscription} from 'rxjs';
 import {RouterAnimation} from './animations/router.animation';
-import {map, pairwise, startWith, tap} from 'rxjs/operators';
-import {log} from 'util';
+import {map, pairwise, startWith} from 'rxjs/operators';
+import {getDaily} from './util';
 
 @Component({
   selector: 'app-root',
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.sidenavState = msg;
     });
 
-    const daily = JSON.parse(localStorage.getItem('daily'));
+    const daily = getDaily();
     if (!daily || new Date().toDateString() !== new Date(daily.dateline).toDateString()) fetch('http://open.iciba.com/dsapi', {
       headers: {'content-type': 'application/json'}
     }).then(async res => {

@@ -6,6 +6,7 @@ import {HomeAnimation} from '../../animations/home.animation';
 import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
+import {getDaily} from '../../util';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +16,11 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class HomeComponent implements OnInit, AfterViewInit {
   word = '';
-  items: [SuggestEntity] = [{
-    entry: '',
-    explain: ''
-  }];
+  items;
   listListener;
   animationState = '0';
   inputChange = new Subject();
+  private daily;
 
   @ViewChild('list') $list;
 
@@ -36,12 +35,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.inputChange.pipe(
       debounce(() => timer(300))
-    ).subscribe(() => {
-      this.suggest.getSuggest(this.word).subscribe((res: Suggest) => this.items = res.data.entries);
+    ).subscribe(e => {
+      console.log(e);
+      if (!e) {
+        this.animationState = '0';
+      } else {
+        this.animationState = '1';
+        this.suggest.icibaSuggest(e).subscribe(res => this.items = res);
+      }
     });
   }
 
   ngOnInit() {
+    this.daily = getDaily();
   }
 
   ngAfterViewInit() {
@@ -54,12 +60,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onChange() {
-    this.animationState = '1';
     this.inputChange.next(this.word);
   }
 
   enterClick(e) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && this.word) {
       this.animationState = '2';
     }
   }
