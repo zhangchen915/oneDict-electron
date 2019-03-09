@@ -1,7 +1,8 @@
 <div class="translate-content">
-  <mat-form-field class="textarea">
+  <mat-form-field class="textarea" appearance="outline">
+    <mat-label>翻译框</mat-label>
     <textarea [(ngModel)]="text" (ngModelChange)="onChange()" matInput type="text" placeholder="请输入要翻译的文字"></textarea>
   </mat-form-field>
 
-  <mat-card>{{translation}}</mat-card>
+  <div class="translate-result">{{translation}}</div>
 </div>
