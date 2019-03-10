@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, Renderer2, ViewChild} from '@angular/core';
 import {MessageService} from '../../services/message.service';
 import {MdictService} from '../../services/mdict.service';
 import {Suggest, SuggestEntity, SuggestService} from '../../providers/suggest.service';
@@ -7,6 +7,7 @@ import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {getDaily} from '../../util';
+import {DatabaseService} from '../../services/database.service';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +29,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private message: MessageService,
               private mdict: MdictService,
               private suggest: SuggestService,
-              private router: ActivatedRoute) {
+              private router: ActivatedRoute,
+              private dbService: DatabaseService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
     });
@@ -54,8 +56,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.listListener = this.renderer.listen(this.$list.nativeElement, 'click', e => {
       if (e.target.classList.contains('search-item')) {
         this.word = e.target.innerHTML;
-        this.animationState = '2';
+        this.search();
       }
+    });
+  }
+
+  private async search() {
+    this.animationState = '2';
+    await this.dbService.db.history.insert({
+      word: this.word,
+      searchTime: new Date().toDateString()
     });
   }
 
@@ -64,8 +74,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   enterClick(e) {
-    if (e.key === 'Enter' && this.word) {
-      this.animationState = '2';
-    }
+    if (e.key === 'Enter' && this.word) this.search();
   }
 }

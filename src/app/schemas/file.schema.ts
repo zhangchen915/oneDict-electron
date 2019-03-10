@@ -1,4 +1,4 @@
-import {RxJsonSchema, RxDocument, RxCollection, RxDatabase} from 'rxdb';
+import {RxJsonSchema, RxDocument, RxCollection} from 'rxdb';
 
 export interface FileDocumentType {
   name: string;
@@ -15,12 +15,6 @@ interface FileDocMethods {
 
 export type FileDocument = RxDocument<FileDocumentType, FileDocMethods>;
 export type FileCollection = RxCollection<FileDocumentType, FileDocMethods, {}>;
-
-export interface FilesCollections {
-  file: FileCollection;
-}
-
-export type FilesDatabase = RxDatabase<FilesCollections>;
 
 const schema: RxJsonSchema = {
   title: 'file schema',

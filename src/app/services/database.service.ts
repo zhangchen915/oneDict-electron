@@ -1,13 +1,6 @@
 import {Injectable} from '@angular/core';
-
-import {
-  FileDocument,
-  FilesDatabase,
-  FilesCollections,
-  FileDocumentType
-} from '../schemas/file.schema';
-
-import fileSchema from '../schemas/file.schema';
+import fileSchema, {FileDocument, FileDocumentType, FileCollection} from '../schemas/file.schema';
+import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
 import RxDB from 'rxdb/plugins/core';
 
 // import modules
@@ -39,13 +32,25 @@ import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 RxDB.plugin(PouchdbAdapterHttp);
 
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
+import {RxDatabase} from 'rxdb';
 
 RxDB.plugin(PouchdbAdapterIdb);
+
+interface Collections {
+  file: FileCollection;
+  history: HistoryCollection;
+}
+
+type Database = RxDatabase<Collections>;
 
 const collections = [
   {
     name: 'file',
     schema: fileSchema,
+    sync: false
+  }, {
+    name: 'history',
+    schema: historySchema,
     sync: false
   }
 ];
@@ -56,9 +61,9 @@ console.log('hostname: ' + window.location.hostname);
 // let doSync = true;
 // if (window.location.hash === '#nosync') doSync = false;
 
-async function _create(): Promise<FilesDatabase> {
+async function _create(): Promise<Database> {
   console.log('DatabaseService: creating database..');
-  const db = await RxDB.create<FilesCollections>({
+  const db = await RxDB.create<Collections>({
     name: 'files',
     adapter: 'idb',
     queryChangeDetection: false
@@ -70,7 +75,6 @@ async function _create(): Promise<FilesDatabase> {
   db.waitForLeadership()
     .then(() => {
       console.log('isLeader now');
-      document.title = '♛ ' + document.title;
     });
 
   // create collections
@@ -83,10 +87,16 @@ async function _create(): Promise<FilesDatabase> {
     const path = docObj.path;
     return db.collections.file.findOne({path}).exec()
       .then((has: FileDocument | null) => {
-        if (has != null) {
-          throw new Error('file already there');
-        }
+        if (has != null) throw new Error('file already there');
         return db;
+      });
+  }, true);
+
+  db.collections.history.preInsert((docObj: HistoryDocumentType) => {
+    const word = docObj.word;
+    return db.collections.file.findOne({path: word}).exec()
+      .then((has: HistoryDocument | null) => {
+        if (has != null) db.collections.file.delete(has);
       });
   }, true);
 
@@ -97,7 +107,6 @@ async function _create(): Promise<FilesDatabase> {
   // });
 
   db.collections.file.find().exec().then(res => {
-    console.log(res);
     if (!res.length) {
       db.collections.file.insert({
         name: '科林斯词典',
@@ -112,12 +121,10 @@ async function _create(): Promise<FilesDatabase> {
     }
   });
 
-  console.log();
-
   return db;
 }
 
-let DB_INSTANCE: FilesDatabase;
+let DB_INSTANCE: Database;
 
 /**
  * This is run via APP_INITIALIZER in app.module.ts
@@ -130,7 +137,7 @@ export async function initDatabase() {
 
 @Injectable()
 export class DatabaseService {
-  get db(): FilesDatabase {
+  get db(): Database {
     return DB_INSTANCE;
   }
 }
