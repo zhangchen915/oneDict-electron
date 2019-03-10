@@ -15,9 +15,6 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
 
-import {AudioDirective} from './directives/audio.directive';
-import {ItalicDirective} from './directives/italic.directive';
-
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
 import {HomeComponent} from './components/home/home.component';
@@ -28,15 +25,13 @@ import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
-import {ResultComponent} from './components/result/result.component';
-import {TabComponent} from './components/result/tab/tab.component';
 
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateComponent} from './components/translate/translate.component';
 import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
-import {BarRatingModule} from 'ngx-bar-rating';
+import {ResultModule} from './components/result/result.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -47,14 +42,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    AudioDirective,
-    ItalicDirective,
     SearchComponent,
     SidenavComponent,
-    ResultComponent,
     TranslateComponent,
     ConfigComponent,
-    TabComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     MaterialModule,
     MaterialFileInputModule,
-    BarRatingModule,
+    ResultModule,
     ScrollToModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
