@@ -22,16 +22,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
               private message: MessageService) {
-
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 
-    if (electronService.isElectron()) {
-    } else {
-    }
-
     this.sidenavState = this.message.sidenavState.getValue();
-
     this.routeTrigger = this.message.sidenavIndex.pipe(
       startWith(0),
       pairwise(),
@@ -56,6 +50,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }).then(async res => {
       localStorage.setItem('daily', await res.text());
     });
+  }
+
+  close() {
+    this.electronService.remote.getCurrentWindow().close();
   }
 
   ngOnDestroy() {
