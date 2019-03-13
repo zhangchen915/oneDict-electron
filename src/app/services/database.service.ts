@@ -84,8 +84,8 @@ async function _create(): Promise<Database> {
   // hooks
   console.log('DatabaseService: add hooks');
   db.collections.file.preInsert((docObj: FileDocumentType) => {
-    const path = docObj.path;
-    return db.collections.file.findOne({path}).exec()
+    const name = docObj.name;
+    return db.collections.file.findOne({name}).exec()
       .then((has: FileDocument | null) => {
         if (has != null) throw new Error('file already there');
         return db;
@@ -139,5 +139,10 @@ export async function initDatabase() {
 export class DatabaseService {
   get db(): Database {
     return DB_INSTANCE;
+  }
+
+  findAllFile() {
+    return this.db.file.find().where('use').gt(0).exec().then(
+      res => res.map(e => e.toJSON()));
   }
 }

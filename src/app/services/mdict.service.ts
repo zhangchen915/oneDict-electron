@@ -1,23 +1,38 @@
 import {Injectable} from '@angular/core';
 import {ConfigService} from './config.service';
-import {Mdict} from 'mdict-ts';
+const Mdict = require('mdict-ts');
+import {DatabaseService} from './database.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MdictService {
-  mdict;
+  private mdict = {};
 
-  constructor(private config: ConfigService) {
-    // this.mdict = new Mdict('ss');
+  constructor(private config: ConfigService, private dbService: DatabaseService) {
   }
 
-  getTranslation() {
-    // return this.mdict.getDefinition('hello');
+  async init(file?) {
+    if (!file) file = await this.dbService.findAllFile();
+    file.forEach(e => {
+      if (e.web || this.mdict.hasOwnProperty(e.name)) return;
+      this.mdict[e.name] = new Mdict(e.path);
+    });
   }
 
-  async getReactionWord(word) {
-
+  async getTranslation(name, query) {
+    return this.mdict[name].getWordList(query).then(res => {
+      let definition = '';
+      if (res.length) {
+        res.some(e => {
+          if (e.word === query) {
+            definition = this.mdict[name].getDefinition(e.offset);
+            return true;
+          }
+        });
+      }
+      return definition;
+    });
   }
 }
 

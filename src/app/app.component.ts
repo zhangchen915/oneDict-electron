@@ -7,6 +7,7 @@ import {Observable, Subscription} from 'rxjs';
 import {RouterAnimation} from './animations/router.animation';
 import {map, pairwise, startWith} from 'rxjs/operators';
 import {getDaily} from './util';
+import {MdictService} from './services/mdict.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
-              private message: MessageService) {
+              private message: MessageService,
+              private mdict: MdictService) {
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 
@@ -39,7 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.subscription = this.message.getSidenavState().subscribe(msg => {
       this.sidenavState = msg;
     });
@@ -50,6 +52,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }).then(async res => {
       localStorage.setItem('daily', await res.text());
     });
+
+    await this.mdict.init();
   }
 
   close() {

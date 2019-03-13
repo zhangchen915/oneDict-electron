@@ -4,6 +4,7 @@ import {DatabaseService} from '../../services/database.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {MessageService} from '../../services/message.service';
 import {ActivatedRoute} from '@angular/router';
+import {MdictService} from '../../services/mdict.service';
 
 @Component({
   selector: 'app-config',
@@ -18,8 +19,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
 
   @ViewChild('file') file;
 
-  constructor(private message: MessageService, private router: ActivatedRoute,
-              private dbService: DatabaseService, private fb: FormBuilder) {
+  constructor(private message: MessageService,
+              private router: ActivatedRoute,
+              private dbService: DatabaseService,
+              private fb: FormBuilder,
+              private mdict: MdictService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
     });
@@ -61,9 +65,10 @@ export class ConfigComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
+  async ngOnDestroy() {
     this.showList.map((e, i) => e.use = i + 1);
     this.hideList.map(e => e.use = 0);
+    await this.mdict.init(this.showList);
     this.dbService.db.file.find().remove().then(() => {
       this.showList.concat(this.hideList).forEach(async e => {
         delete e._rev;
