@@ -4,12 +4,12 @@
   padding: 0 10%;
   background-image: linear-gradient(-120deg, #26e289, #1a5fa2 100%, red 200%);
 
-  .toggle-sidenav {
+  .top-bar {
     position: absolute;
+    z-index: 999;
   }
 
   .search-container {
-    height: 20%;
     width: 100%;
 
     .search-input {
