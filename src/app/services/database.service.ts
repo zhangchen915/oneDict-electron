@@ -145,4 +145,10 @@ export class DatabaseService {
     return this.db.file.find().where('use').gt(0).exec().then(
       res => res.map(e => e.toJSON()));
   }
+
+  // .sort({'searchTime': 'desc'})
+  async getHistory() {
+    return await this.db.history.find().limit(15).exec().then(
+      res => res.map(e => e.toJSON()));
+  }
 }
