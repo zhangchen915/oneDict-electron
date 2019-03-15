@@ -23,6 +23,12 @@
     <app-result [word]="word"></app-result>
   </div>
 
+  <div class="history" *ngIf="history.length">
+    <mat-chip-list>
+      <mat-chip *ngFor="let e of history">{{e.word}}</mat-chip>
+    </mat-chip-list>
+  </div>
+
   <div class="daily-content" *ngIf="animationState==='0'">
     <img [src]="daily.picture2">
     <div class="daily">

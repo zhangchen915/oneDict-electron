@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   animationState = '0';
   inputChange = new Subject();
   private daily;
+  private history = [];
 
   @ViewChild('list') $list;
 
@@ -53,6 +54,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.daily = getDaily();
+    this.history = await this.dbService.getHistory();
   }
 
   ngAfterViewInit() {
