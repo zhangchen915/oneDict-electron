@@ -1,5 +1,8 @@
 <div class="container">
-  <button mat-button class="toggle-sidenav" (click)="message.toggleSidenav()">Toggle</button>
+  <div class="top-bar">
+    <button mat-button (click)="message.toggleSidenav()"><mat-icon>menu</mat-icon></button>
+    <button mat-button (click)="openDialog()"><mat-icon>person</mat-icon></button>
+  </div>
 
   <div [@openClose]="animationState" class="search-container">
     <mat-form-field class="search-input">

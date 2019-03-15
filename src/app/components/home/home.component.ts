@@ -8,6 +8,8 @@ import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {getDaily} from '../../util';
 import {DatabaseService} from '../../services/database.service';
+import {LoginComponent} from '../login/login.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -30,7 +32,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,
-              private dbService: DatabaseService) {
+              private dbService: DatabaseService,
+              private dialog: MatDialog) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
     });
@@ -48,7 +51,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.daily = getDaily();
   }
 
@@ -65,7 +68,19 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.animationState = '2';
     await this.dbService.db.history.insert({
       word: this.word,
-      searchTime: new Date().toDateString()
+      searchTime: new Date().toLocaleString()
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '300px',
+      height: '300px',
+      data: {username: ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
     });
   }
 
