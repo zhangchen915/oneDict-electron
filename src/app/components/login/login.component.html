@@ -1,0 +1,43 @@
+<div class="container" [class.active]="active">
+  <div class="card" [class.flipped]="flipped">
+
+    <div class="front">
+      <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="账号" type="text" formControlName="email" required>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="密码" type="password" formControlName="password" required>
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-button type="submit">登录</button>
+        </div>
+        <button mat-button (click)="flip()">去注册</button>
+      </form>
+    </div>
+
+    <div class="back">
+      <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="账号" type="text" formControlName="email">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="密码" type="password" formControlName="password">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="重复密码" type="password" formControlName="repeatPassword">
+        </mat-form-field>
+
+        <div class="button-container">
+          <button mat-button type="submit">注册</button>
+        </div>
+        <button mat-button (click)="flip()">去</button>
+      </form>
+    </div>
+  </div>
+
+</div>

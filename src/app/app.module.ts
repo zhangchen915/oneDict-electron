@@ -14,10 +14,12 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 import {ElectronService} from './providers/electron.service';
+import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
 import {HomeComponent} from './components/home/home.component';
+import {LoginComponent} from './components/login/login.component';
 import {SearchComponent} from './components/search/search.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {ConfigComponent} from './components/config/config.component';
@@ -25,6 +27,7 @@ import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
+import {LoginService} from './providers/login.service';
 
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateComponent} from './components/translate/translate.component';
@@ -46,7 +49,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidenavComponent,
     TranslateComponent,
     ConfigComponent,
+    LoginComponent
   ],
+  entryComponents: [LoginComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -73,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
       deps: []
     },
-    ElectronService, DatabaseService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService],
+    ElectronService, DatabaseService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
