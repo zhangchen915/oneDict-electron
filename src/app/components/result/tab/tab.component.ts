@@ -15,29 +15,29 @@ import {MessageService} from '../../../services/message.service';
 })
 export class TabComponent implements OnInit, AfterViewChecked {
 
+  constructor(private message: MessageService) {
+  }
+
   @Input() tabs;
   private selected = 0;
   change = true;
 
-  constructor(private message: MessageService) {
-  }
-
   @ViewChild('tabDiv') tabDiv: ElementRef;
   @ViewChild('inkBar') inkBar: ElementRef;
 
-  ngOnInit() {
-  }
-
-  private position(element: HTMLElement) {
+  private static position(element: HTMLElement) {
     return {
       left: element ? (element.offsetLeft || 0) + 'px' : '0',
       width: element ? (element.offsetWidth || 0) + 'px' : '0',
     };
   }
 
+  ngOnInit() {
+  }
+
   ngAfterViewChecked(): void {
     if (this.change && this.tabDiv) {
-      const positions = this.position(this.tabDiv.nativeElement.querySelector('.selected'));
+      const positions = TabComponent.position(this.tabDiv.nativeElement.querySelector('.selected'));
       this.inkBar.nativeElement.style.left = positions.left;
       this.inkBar.nativeElement.style.width = positions.width;
       this.change = false;

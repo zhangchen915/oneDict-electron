@@ -1,11 +1,9 @@
 import {
   Component,
-  ElementRef,
+  EventEmitter,
   Input,
-  OnInit,
-  ViewChild,
+  OnInit, Output,
 } from '@angular/core';
-import {MessageService} from '../../../services/message.service';
 
 @Component({
   selector: 'app-like',
@@ -13,10 +11,17 @@ import {MessageService} from '../../../services/message.service';
   styleUrls: ['./like.component.scss']
 })
 export class LikeComponent implements OnInit {
-  constructor(private message: MessageService) {
+  constructor() {
   }
+
+  @Input() like;
+  @Output() likeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   ngOnInit() {
   }
 
+  onClick() {
+    this.like = !this.like;
+    this.likeChange.emit(this.like);
+  }
 }

@@ -2,7 +2,7 @@ import {RxJsonSchema, RxDocument, RxCollection} from 'rxdb';
 
 export interface GlossaryDocumentType {
   word: string;
-  searchTime: string;
+  addTime: string;
 }
 
 export type GlossaryDocument = RxDocument<GlossaryDocumentType>;

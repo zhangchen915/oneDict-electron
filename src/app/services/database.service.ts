@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import fileSchema, {FileDocument, FileDocumentType, FileCollection} from '../schemas/file.schema';
 import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
+import glossarySchema, {GlossaryCollection, GlossaryDocument, GlossaryDocumentType} from '../schemas/glossary.schema';
 import RxDB from 'rxdb/plugins/core';
 
 // import modules
@@ -39,6 +40,7 @@ RxDB.plugin(PouchdbAdapterIdb);
 interface Collections {
   file: FileCollection;
   history: HistoryCollection;
+  glossary: GlossaryCollection;
 }
 
 type Database = RxDatabase<Collections>;
@@ -51,6 +53,10 @@ const collections = [
   }, {
     name: 'history',
     schema: historySchema,
+    sync: false
+  }, {
+    name: 'glossary',
+    schema: glossarySchema,
     sync: false
   }
 ];
@@ -149,6 +155,33 @@ export class DatabaseService {
   // .sort({'searchTime': 'desc'})
   async getHistory() {
     return await this.db.history.find().limit(15).exec().then(
+      res => res.map(e => e.toJSON()));
+  }
+
+  async inGlossary(word: string) {
+    return await this.db.glossary.findOne({word: {$eq: word}}).exec().then(res => !!res);
+  }
+
+  async updateGlossary(word, like) {
+    const query = this.db.glossary.findOne({word: {$eq: word}});
+    if (like) {
+      await query.exec().then(async res => {
+
+        if (!!res) {
+          await query.update({word});
+        } else {
+          await this.db.glossary.insert({
+            word, addTime: new Date().toLocaleString(),
+          });
+        }
+      });
+    } else {
+      await query.remove();
+    }
+  }
+
+  async getGlossary(skip: number = 0) {
+    return await this.db.history.find().skip(skip).limit(15).exec().then(
       res => res.map(e => e.toJSON()));
   }
 }

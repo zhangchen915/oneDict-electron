@@ -1,7 +1,7 @@
 <div class="result-content">
   <app-tab [tabs]="tabs"></app-tab>
 
-  <app-like></app-like>
+  <app-like [(like)]="like"></app-like>
   <div class="result selectable" *ngIf="res">
     <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
     <div class="phonetic">
@@ -44,6 +44,8 @@
 
       </mat-card-content>
     </mat-card>
+
+    <div></div>
 
     <mat-card class="card">
       <mat-card-header>
