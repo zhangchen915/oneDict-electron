@@ -1,8 +1,7 @@
 import {
   Component,
   EventEmitter,
-  Input,
-  OnInit, Output,
+  Input, OnInit, Output,
 } from '@angular/core';
 
 @Component({
@@ -20,8 +19,7 @@ export class LikeComponent implements OnInit {
   ngOnInit() {
   }
 
-  onClick() {
-    this.like = !this.like;
-    this.likeChange.emit(this.like);
+  onClick(c) {
+    this.likeChange.emit(c);
   }
 }

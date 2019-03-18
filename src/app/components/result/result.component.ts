@@ -19,7 +19,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   }
 
   res;
-  like: boolean;
+  like = false;
   _like: boolean;
   tabs = [];
 
@@ -46,7 +46,6 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.tabs = await this.dbService.findAllFile();
     for (let i = 0; i < this.tabs.length; i++) {
       if (!this.tabs[i].web) {
-        // delete this.tabs[i]._rev;
         const res = await this.mdict.getTranslation(this.tabs[i].name, word);
         console.log(res);
       }
