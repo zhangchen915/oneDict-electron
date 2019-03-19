@@ -3,18 +3,11 @@
   flex-direction: column;
   height: 100%;
 
-  .result {
+  .definition {
+    width: 100%;
+    padding: 10px 0;
     overflow-y: scroll;
     overflow-x: hidden;
-    padding: 0 10px;
   }
 
-  .card {
-    margin-bottom: 15px;
-
-    .example-content {
-      color: #cccccc;
-      margin-bottom: 10px;
-    }
-  }
 }

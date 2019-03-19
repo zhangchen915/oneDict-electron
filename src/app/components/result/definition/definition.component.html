@@ -1,0 +1,48 @@
+<div class="definition">
+  <div *ngIf="type.name=='科林斯词典'">
+    <div *ngIf="res.collins">
+      <div *ngFor="let entry of res.collins.entry">
+        <div *ngFor="let e of entry.tran_entry">
+          <div *ngIf="e.tran">
+            <div [innerHTML]="e.tran"></div>
+            <div *ngIf="e.exam_sents">
+              <div class="example-content" *ngFor="let sent of e.exam_sents.sent">
+                <div>{{sent.eng_sent}}</div>
+                <div>{{sent.chn_sent}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="type.name=='牛津词典'">
+    <div [innerHTML]="res.phrases"></div>
+    <div *ngFor="let content of res.content">
+      <div>{{content.item.pos}}</div>
+
+      <div *ngFor="let core of content.item.core">
+        <div [italic]="core.detail.en"></div>
+        <div>{{core.detail.zh}}</div>
+        <div class="example-content" *ngFor="let example of core.example">
+          <div [italic]="example.en"></div>
+          <div>{{example.zh}}</div>
+        </div>
+        <div class="branch" *ngIf="core.branch">
+          <div *ngFor="let branch of core.branch">
+            <div>{{branch.detail.en}}</div>
+            <div>{{branch.detail.zh}}</div>
+            <div class="example-content" *ngFor="let example of branch.example">
+              <div [italic]="example.en"></div>
+              <div>{{example.zh}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="!type.web" [innerHtml]="definition"></div>
+</div>
