@@ -3,11 +3,13 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {TranslateComponent} from './components/translate/translate.component';
 import {ConfigComponent} from './components/config/config.component';
+import {GlossaryComponent} from './components/glossary/glossary.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent, data: {state: 0}},
   {path: 'translate', component: TranslateComponent, data: {state: 1}},
+  {path: 'glossary', component: GlossaryComponent, data: {state: 2}},
   {path: 'config', component: ConfigComponent, data: {state: 3}}
 ];
 

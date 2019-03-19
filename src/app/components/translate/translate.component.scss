@@ -1,6 +1,12 @@
+@import "../../../styles";
+
+:host {
+  @include host
+}
+
 .translate-content {
   width: 100%;
-  height: 100vh;
+  height: 100%;
   padding: 5%;
   box-sizing: border-box;
   background-image: linear-gradient(to bottom right, #ff8492, #dc4225);

@@ -26,6 +26,13 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 
+@mixin host(){
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
 html, body {
   margin: 0;
   padding: 0;

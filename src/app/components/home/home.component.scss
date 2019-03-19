@@ -1,6 +1,11 @@
+@import "../../../styles";
+
+:host {
+  @include host
+}
+
 .container {
-  position: relative;
-  height: 100vh;
+  height: 100%;
   padding: 0 10%;
   background-image: linear-gradient(-120deg, #26e289, #1a5fa2 100%, red 200%);
 

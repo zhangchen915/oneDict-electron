@@ -2,8 +2,6 @@ import {trigger, transition, group, query, style, animate} from '@angular/animat
 
 export const RouterAnimation = trigger('routeAnimations', [
   transition('* <=> *', [
-    query(':enter, :leave', style({position: 'fixed', width: '100%'})
-      , {optional: true}),
     group([
       query(':enter', [
         style({transform: 'translateY({{offsetEnter}}%)'}),
