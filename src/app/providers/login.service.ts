@@ -12,7 +12,7 @@ export class LoginService {
   }
 
   login(payload) {
-    this.http.post(`${config.domin}/login`, params(payload), {
+    this.http.post(`${config.domain}/login`, params(payload), {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       })

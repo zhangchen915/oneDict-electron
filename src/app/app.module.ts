@@ -35,6 +35,7 @@ import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {ResultModule} from './components/result/result.module';
+import config from '../../config';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,6 +64,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialFileInputModule,
     ResultModule,
     ScrollToModule.forRoot(),
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('access_token'),
+        whitelistedDomains: ['youdao.com', 'sogou.com', 'iciba.com'],
+        blacklistedRoutes: [config.domain]
+      }
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
