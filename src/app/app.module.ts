@@ -23,6 +23,7 @@ import {LoginComponent} from './components/login/login.component';
 import {SearchComponent} from './components/search/search.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {ConfigComponent} from './components/config/config.component';
+import {GlossaryComponent} from './components/glossary/glossary.component';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
@@ -50,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidenavComponent,
     TranslateComponent,
     ConfigComponent,
+    GlossaryComponent,
     LoginComponent
   ],
   entryComponents: [LoginComponent],

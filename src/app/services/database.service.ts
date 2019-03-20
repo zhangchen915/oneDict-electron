@@ -181,7 +181,7 @@ export class DatabaseService {
   }
 
   async getGlossary(skip: number = 0) {
-    return await this.db.history.find().skip(skip).limit(15).exec().then(
+    return await this.db.glossary.find().exec().then(
       res => res.map(e => e.toJSON()));
   }
 }
