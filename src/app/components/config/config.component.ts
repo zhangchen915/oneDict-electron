@@ -5,6 +5,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {MessageService} from '../../services/message.service';
 import {ActivatedRoute} from '@angular/router';
 import {MdictService} from '../../services/mdict.service';
+import {TtsService} from '../../services/tts.service';
 
 @Component({
   selector: 'app-config',
@@ -16,6 +17,8 @@ export class ConfigComponent implements OnInit, OnDestroy {
   hideList = [];
   formDoc: FormGroup;
   fileInput;
+  voices: SpeechSynthesisVoice[];
+  selected;
 
   @ViewChild('file') file;
 
@@ -27,6 +30,10 @@ export class ConfigComponent implements OnInit, OnDestroy {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
     });
+
+    speechSynthesis.onvoiceschanged = () => this.voices = speechSynthesis.getVoices();
+    this.voices = speechSynthesis.getVoices();
+    this.selected = TtsService.tts;
   }
 
   addFile() {
@@ -75,5 +82,9 @@ export class ConfigComponent implements OnInit, OnDestroy {
         await this.dbService.db.file.insert(e);
       });
     });
+
+    TtsService.tts = this.selected;
+
+    this.message.openSnackBar('已保存');
   }
 }

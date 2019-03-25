@@ -27,6 +27,7 @@ import {GlossaryComponent} from './components/glossary/glossary.component';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
+import {TtsService} from './services/tts.service';
 import {ResultApiService} from './providers/result.service';
 import {LoginService} from './providers/login.service';
 
@@ -88,7 +89,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
       deps: []
     },
-    ElectronService, DatabaseService, MessageService, ConfigService, MdictService, ResultApiService, TranslateService, LoginService],
+    ElectronService, DatabaseService, MessageService, ConfigService,
+    MdictService, ResultApiService, TranslateService, LoginService, TtsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
