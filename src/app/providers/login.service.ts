@@ -24,6 +24,15 @@ export class LoginService {
       retry(2));
   }
 
+  register(payload) {
+    return this.http.post(`//${config.domain}/register`, params(payload), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/x-www-form-urlencoded'
+      })
+    }).pipe(
+      retry(2));
+  }
+
   logout() {
     localStorage.removeItem('access_token');
   }
