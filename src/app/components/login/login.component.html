@@ -5,16 +5,19 @@
       <form [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
         <mat-form-field class="full-width">
           <input matInput placeholder="账号" type="text" formControlName="email" required>
+          <mat-error *ngIf="loginForm.controls['email'].hasError('required')">请输入用户名</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="密码" type="password" formControlName="password" required>
+          <input matInput placeholder="密码" type="password" formControlName="password" minlength="6" maxlength="16"
+                 required>
+          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">请输入密码</mat-error>
         </mat-form-field>
 
         <mat-checkbox formControlName="remember">记住用户名</mat-checkbox>
 
         <div class="button-container">
-          <button mat-button type="submit">登录</button>
+          <button mat-button type="submit" [disabled]="loginForm.invalid">登录</button>
           <button mat-button type="button" (click)="flip()">去注册</button>
         </div>
       </form>
@@ -24,20 +27,25 @@
     <div class="back">
       <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
         <mat-form-field class="full-width">
-          <input matInput placeholder="账号" type="text" formControlName="email">
+          <input matInput placeholder="账号" type="text" formControlName="email" required>
+          <mat-error *ngIf="registerForm.controls['email'].hasError('required')">请输入用户名</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="密码" type="password" formControlName="password">
+          <input matInput placeholder="密码" type="password" formControlName="password" minlength="6" maxlength="16"
+                 required>
+          <mat-error *ngIf="registerForm.controls['password'].hasError('required')">请输入密码</mat-error>
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input matInput placeholder="重复密码" type="password" formControlName="repeatPassword">
+          <input matInput placeholder="重复密码" type="password" formControlName="repeatPassword" minlength="6" [errorStateMatcher]="matcher"
+                 maxlength="16" required>
+          <mat-error *ngIf="registerForm.hasError('repeat')">两次密码输入不一致</mat-error>
         </mat-form-field>
 
         <div class="button-container">
-          <button mat-button type="submit">注册</button>
-          <button mat-button type="button"  (click)="flip()">去登录</button>
+          <button mat-button type="submit" [disabled]="registerForm.invalid">注册</button>
+          <button mat-button type="button" (click)="flip()">去登录</button>
         </div>
       </form>
     </div>

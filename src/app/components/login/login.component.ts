@@ -1,8 +1,17 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher} from '@angular/material';
 import {LoginService} from '../../providers/login.service';
-import {FormBuilder} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MessageService} from '../../services/message.service';
+
+class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
+  }
+}
 
 @Component({
   templateUrl: './login.component.html',
@@ -10,15 +19,28 @@ import {MessageService} from '../../services/message.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   flipped = false;
+  matcher = new MyErrorStateMatcher();
   loginForm = this.fb.group({
-    email: [localStorage.getItem('email')],
-    password: [''],
+    email: [localStorage.getItem('email'), [
+      Validators.required,
+    ]],
+    password: ['', [
+      Validators.required,
+    ]],
     remember: true
   });
   registerForm = this.fb.group({
-    email: [''],
-    password: [''],
+    email: ['', [
+      Validators.required,
+    ]],
+    password: ['', [
+      Validators.required,
+    ]],
     repeatPassword: [''],
+  }, {
+    validator: (group: FormGroup) => {
+      return group.controls.password.value !== group.controls.repeatPassword.value ? {'repeat': true} : null;
+    }
   });
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
@@ -45,7 +67,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   register(value) {
-    // this.user.register(value);
+    this.user.register(value).subscribe(res => {
+      console.log(res);
+    });
   }
 
   flip() {
