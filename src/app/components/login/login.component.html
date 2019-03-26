@@ -1,4 +1,4 @@
-<div class="container" [class.active]="active">
+<div class="container">
   <div class="card" [class.flipped]="flipped">
 
     <div class="front">
@@ -11,11 +11,14 @@
           <input matInput placeholder="密码" type="password" formControlName="password" required>
         </mat-form-field>
 
+        <mat-checkbox formControlName="remember">记住用户名</mat-checkbox>
+
         <div class="button-container">
           <button mat-button type="submit">登录</button>
+          <button mat-button type="button" (click)="flip()">去注册</button>
         </div>
-        <button mat-button (click)="flip()">去注册</button>
       </form>
+
     </div>
 
     <div class="back">
@@ -34,8 +37,8 @@
 
         <div class="button-container">
           <button mat-button type="submit">注册</button>
+          <button mat-button type="button"  (click)="flip()">去登录</button>
         </div>
-        <button mat-button (click)="flip()">去</button>
       </form>
     </div>
   </div>

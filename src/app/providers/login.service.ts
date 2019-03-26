@@ -12,14 +12,13 @@ export class LoginService {
   }
 
   login(payload) {
-    this.http.post(`${config.domain}/login`, params(payload), {
+    return this.http.post(`//${config.domain}/auth/login`, params(payload), {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     }).pipe(
       map((result: any) => {
-        console.log(result);
-        localStorage.setItem('access_token', result.token);
+        localStorage.setItem('access_token', result);
         return true;
       }),
       retry(2));
