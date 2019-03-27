@@ -16,7 +16,7 @@ export class TtsService {
   }
 
   speak(word: string) {
-    let voice = TtsService.tts();
+    let voice = TtsService.tts;
     if (!voice) voice = speechSynthesis.getVoices()[0];
 
     const utterThis = new SpeechSynthesisUtterance(word);

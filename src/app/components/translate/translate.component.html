@@ -1,8 +1,20 @@
 <div class="translate-content">
   <mat-form-field class="textarea" appearance="outline">
     <mat-label>翻译框</mat-label>
-    <textarea [(ngModel)]="text" (ngModelChange)="onChange()" matInput type="text" placeholder="请输入要翻译的文字"></textarea>
+    <textarea [(ngModel)]="text" matInput type="text" placeholder="请输入要翻译的文字"></textarea>
+    <app-translate-control [text]="text"></app-translate-control>
   </mat-form-field>
 
-  <div class="translate-result">{{translation}}</div>
+  <div class="translate-button">
+    <!--<span>请选择翻译的语言： </span>-->
+    <button mat-stroked-button (click)="translate()" [disabled]="!text">
+      <mat-icon matSuffix>translate</mat-icon>
+      翻译
+    </button>
+  </div>
+
+  <div class="translate-result selectable">
+    <div>{{translation}}</div>
+    <app-translate-control [text]="translation"></app-translate-control>
+  </div>
 </div>

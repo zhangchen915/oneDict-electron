@@ -32,11 +32,11 @@ import {ResultApiService} from './providers/result.service';
 import {LoginService} from './providers/login.service';
 
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
-import {TranslateComponent} from './components/translate/translate.component';
 import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {ResultModule} from './components/result/result.module';
+import {TranslationModule} from './components/translate/translation.module';
 import config from '../../config';
 
 // AoT requires an exported function for factories
@@ -50,7 +50,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     SearchComponent,
     SidenavComponent,
-    TranslateComponent,
     ConfigComponent,
     GlossaryComponent,
     LoginComponent
@@ -66,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     MaterialFileInputModule,
     ResultModule,
+    TranslationModule,
     ScrollToModule.forRoot(),
     JwtModule.forRoot({
       config: {

@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   register(value) {
     this.user.register(value).subscribe(res => {
-      console.log(res);
+      this.message.openSnackBar('注册成功');
     });
   }
 
