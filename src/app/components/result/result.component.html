@@ -1,5 +1,4 @@
 <div class="result-content">
-  <!--<app-tab [tabs]="tabs"></app-tab>-->
   <mat-tab-group>
     <mat-tab>
       <ng-template mat-tab-label>基本释义</ng-template>
@@ -7,10 +6,10 @@
         <app-like [(like)]=like></app-like>
         <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
         <div class="phonetic">
-          <span><mat-icon>record_voice_over</mat-icon></span>
+          <mat-icon>record_voice_over</mat-icon>
           <mat-chip-list>
-            <mat-chip class="pointer" *ngFor="let name of res.phonetic" matTooltip="{{name.type}}"
-                      [audio]="name.filename">
+            <mat-chip class="pointer" *ngFor="let name of res.phonetic" [audio]="name.filename">
+              <img [src]="'../../../assets/images/'+name.type+'.svg'"/>
               {{name.text}}</mat-chip>
           </mat-chip-list>
         </div>
@@ -18,7 +17,7 @@
         <mat-chip-list>
           <mat-chip *ngFor="let name of res.type">{{name}}</mat-chip>
         </mat-chip-list>
-        <div>
+        <div class="selectable">
           <p *ngFor="let tr of res.base">{{tr}}</p>
         </div>
       </div>
