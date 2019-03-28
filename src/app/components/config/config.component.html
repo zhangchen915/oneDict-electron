@@ -1,55 +1,83 @@
 <div class="config-content">
-  <div class="choose-file">
-    <form [formGroup]="formDoc" novalidate>
-      <mat-form-field>
-        <ngx-mat-file-input #file formControlName="basicfile" placeholder="请选择mdx字典文件" [(ngModel)]="fileInput"
-                            [accept]="'.mdx'"></ngx-mat-file-input>
-        <mat-icon matSuffix>folder</mat-icon>
-      </mat-form-field>
-    </form>
-    <button mat-button *ngIf="!file.empty" (click)="addFile()">添加</button>
-  </div>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>词库管理</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
 
-  <div class="container">
-    <div class="example-container">
-      <h2>调整字典顺序</h2>
+      <div class="choose-file">
+        <form [formGroup]="formDoc" novalidate>
+          <mat-form-field>
+            <ngx-mat-file-input #file formControlName="basicfile" placeholder="请选择mdx字典文件"
+                                [(ngModel)]="fileInput"
+                                [accept]="'.mdx'"></ngx-mat-file-input>
+            <mat-icon matSuffix>folder</mat-icon>
+          </mat-form-field>
+        </form>
+        <button mat-button *ngIf="!file.empty" (click)="addFile()">添加</button>
+      </div>
 
-      <div
-        cdkDropList
-        #todoList="cdkDropList"
-        [cdkDropListData]="showList"
-        [cdkDropListConnectedTo]="[doneList]"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        <div *ngIf="showList.length">
-          <div class="example-box" *ngFor="let item of showList" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
+      <div class="container">
+        <div class="example-container">
+          <h2>调整字典顺序</h2>
+
+          <div
+            cdkDropList
+            #todoList="cdkDropList"
+            [cdkDropListData]="showList"
+            [cdkDropListConnectedTo]="[doneList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div *ngIf="showList.length">
+              <div class="example-box" *ngFor="let item of showList" cdkDrag>{{item.name}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-container">
+          <h2>将字典拖到此关闭</h2>
+
+          <div
+            cdkDropList
+            #doneList="cdkDropList"
+            [cdkDropListData]="hideList"
+            [cdkDropListConnectedTo]="[todoList]"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div *ngIf="hideList.length">
+              <div class="example-box" *ngFor="let item of hideList" cdkDrag>{{item.name}}</div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </mat-expansion-panel>
 
-    <div class="example-container">
-      <h2>将字典拖到此关闭</h2>
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>基本设置</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
 
-      <div
-        cdkDropList
-        #doneList="cdkDropList"
-        [cdkDropListData]="hideList"
-        [cdkDropListConnectedTo]="[todoList]"
-        class="example-list"
-        (cdkDropListDropped)="drop($event)">
-        <div *ngIf="hideList.length">
-          <div class="example-box" *ngFor="let item of hideList" cdkDragLockAxis="y" cdkDrag>{{item.name}}</div>
-        </div>
+      <div class="container">
+        <mat-form-field>
+          <mat-label>TTS发音引擎</mat-label>
+          <mat-select [(value)]="selected">
+            <mat-option *ngFor="let t of voices" [value]="t.name">{{t.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
-    </div>
-  </div>
+      <mat-slide-toggle>剪贴板取词</mat-slide-toggle>
+    </mat-expansion-panel>
 
-  <div class="container">
-    <mat-form-field>
-      <mat-label>TTS发音引擎</mat-label>
-      <mat-select [(value)]="selected">
-        <mat-option *ngFor="let t of voices" [value]="t.name">{{t.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>字体设置</mat-panel-title>
+        <mat-panel-description></mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-slider [max]="32" [min]="14" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize">
+      </mat-slider>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

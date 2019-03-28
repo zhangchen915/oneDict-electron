@@ -13,12 +13,14 @@ import {TtsService} from '../../services/tts.service';
   styleUrls: ['./config.component.scss']
 })
 export class ConfigComponent implements OnInit, OnDestroy {
+  step = 0;
   showList = [];
   hideList = [];
   formDoc: FormGroup;
   fileInput;
   voices: SpeechSynthesisVoice[];
   selected;
+  fontSize = 16;
 
   @ViewChild('file') file;
 
@@ -34,6 +36,10 @@ export class ConfigComponent implements OnInit, OnDestroy {
     speechSynthesis.onvoiceschanged = () => this.voices = speechSynthesis.getVoices();
     this.voices = speechSynthesis.getVoices();
     this.selected = TtsService.tts;
+  }
+
+  setStep(index: number) {
+    this.step = index;
   }
 
   addFile() {
