@@ -33,6 +33,9 @@
     flex: 1 1;
     width: 100%;
     height: 25%;
+    box-sizing: border-box;
+    padding: 10px;
     border: black solid 1px;
+    border-radius: 5px;
   }
 }
