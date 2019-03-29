@@ -26,7 +26,7 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 // that you are using.
 @include angular-material-theme($candy-app-theme);
 
-@mixin host(){
+@mixin host() {
   display: block;
   position: absolute;
   width: 100%;
@@ -71,7 +71,7 @@ ul, li {
   cursor: pointer;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
@@ -79,10 +79,10 @@ ul, li {
   user-select: text;
 }
 
-mat-dialog-container{
+mat-dialog-container {
   padding: 0 !important;
 }
 
-.mat-snack-bar-handset{
-  width: auto!important;
+.mat-snack-bar-handset {
+  width: auto !important;
 }
