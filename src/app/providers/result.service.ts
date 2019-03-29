@@ -11,7 +11,7 @@ const headers = {
   'X-Requested-With': 'XMLHttpRequest'
 };
 
-const token = 'b33bf8c58706155663d1ad5dba4192dc';
+const token = '72da1dc662daf182c4f7671ec884074b';
 
 const uuid = () => {
   let t, e;
