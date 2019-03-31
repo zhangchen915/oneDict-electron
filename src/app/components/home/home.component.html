@@ -1,7 +1,11 @@
 <div class="container">
   <div class="top-bar">
-    <button mat-button (click)="message.toggleSidenav()"><mat-icon>menu</mat-icon></button>
-    <button mat-button (click)="openDialog()"><mat-icon>person</mat-icon></button>
+    <button mat-button (click)="message.toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <button mat-button (click)="openDialog()">
+      <mat-icon>person</mat-icon>
+    </button>
   </div>
 
   <div [@openClose]="animationState" class="search-container">
@@ -16,7 +20,8 @@
 
     <div #list class="suggest-content">
       <cdk-virtual-scroll-viewport *ngIf="animationState==='1'" itemSize="10" class="search-list">
-        <div *cdkVirtualFor="let item of items" class="search-item">{{item.key}}</div>
+        <div *cdkVirtualFor="let item of items" class="search-item pointer"
+             [attr.data-partOfSpeech]="item.means[0].part">{{item.key}}</div>
       </cdk-virtual-scroll-viewport>
     </div>
   </div>

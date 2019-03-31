@@ -47,7 +47,7 @@ export class SuggestService {
       m: 'getsuggest',
       num: 20,
       client: 6,
-      is_need_mean: 0,
+      is_need_mean: 1,
       word
     })).pipe(retry(2), map(e => e.message));
   }

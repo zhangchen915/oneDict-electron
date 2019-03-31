@@ -46,10 +46,16 @@
       .search-list {
         height: 100%;
         margin: 0 auto;
-        cursor: pointer;
 
         .search-item {
           height: 35px;
+
+          &:after {
+            content: attr(data-partOfSpeech);
+            font-size: 12px;
+            line-height: 12px;
+            margin-left: 5px;
+          }
         }
       }
     }
