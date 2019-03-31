@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   inputChange = new Subject();
   private daily;
   private history = [];
+  private spellSuggest = [];
 
   @ViewChild('list') $list;
 
@@ -42,7 +43,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.inputChange.pipe(
       debounce(() => timer(300))
     ).subscribe(e => {
-      console.log(e);
+      this.spellSuggest = this.suggest.spell(e);
+
       if (!e) {
         this.animationState = '0';
       } else {
@@ -66,23 +68,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private async search() {
+  async search(word = this.word) {
+    this.word = word;
     this.animationState = '2';
+    this.spellSuggest = [];
     await this.dbService.db.history.insert({
-      word: this.word,
+      word,
       searchTime: new Date().toLocaleString()
     });
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.dialog.open(LoginComponent, {
       width: '300px',
       height: '300px',
       data: {username: ''}
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
     });
   }
 

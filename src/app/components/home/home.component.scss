@@ -22,6 +22,22 @@
       margin: 0 auto;
       padding-top: 50px;
       font-size: 26px;
+
+      .spell-content {
+        font-size: 16px;
+        height: 27px;
+      }
+
+      .spell-suggest {
+        font-size: 16px;
+        display: inline-block;
+        line-height: 16px;
+        padding: 3px;
+        margin: 0 3px 3px 0;
+        vertical-align: middle;
+        border: $white-12-opacity dashed 1px;
+        border-radius: 3px;
+      }
     }
 
     .suggest-content {

@@ -1,7 +1,10 @@
-import {app, BrowserWindow, Menu} from 'electron';
+import {app, BrowserWindow, Menu, ipcMain} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 import contextMenu from 'electron-context-menu';
+
+const dictionary = require('dictionary-en-us');
+const nspell = require('nspell');
 
 contextMenu({
   showSaveImageAs: true,
@@ -60,6 +63,13 @@ function createWindow() {
 }
 
 try {
+  dictionary((err, dict) => {
+    if (err) throw err;
+    this.spell = nspell(dict);
+  });
+  ipcMain.on('getSpellSuggest', (event, arg) => {
+    event.returnValue = this.spell.suggest(arg);
+  });
 
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.

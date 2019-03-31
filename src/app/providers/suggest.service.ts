@@ -1,5 +1,4 @@
-const dictionary = require('dictionary-en-us');
-const nspell = require('nspell');
+import {ipcRenderer} from 'electron';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, retry} from 'rxjs/operators';
@@ -26,13 +25,11 @@ export interface Suggest {
   providedIn: 'root'
 })
 export class SuggestService {
-  public spell;
-
   constructor(private http: HttpClient) {
-    dictionary((err, dict) => {
-      if (err) throw err;
-      this.spell = nspell(dict);
-    });
+  }
+
+  spell(word): Array<string> {
+    return ipcRenderer.sendSync('getSpellSuggest', word);
   }
 
   getSuggest(word) {
