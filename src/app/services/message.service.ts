@@ -21,9 +21,11 @@ export class MessageService {
   }
 
   openSnackBar(message: string, action?: string) {
-    this.snackBar.open(message, action, {
-      duration: 1000,
-      horizontalPosition: 'right'
+    Promise.resolve().then(() => {
+      this.snackBar.open(message, action, {
+        duration: 1000,
+        horizontalPosition: 'right'
+      });
     });
   }
 }
