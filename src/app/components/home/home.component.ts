@@ -78,6 +78,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
   }
 
+  getPart(item) {
+    return item.means.length ? item.means[0].part : '';
+  }
+
   openDialog(): void {
     this.dialog.open(LoginComponent, {
       width: '300px',
