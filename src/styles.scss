@@ -79,6 +79,13 @@ ul, li {
   user-select: text;
 }
 
+.center{
+  position: absolute;
+  left:  50%;
+  top:  50%;
+  transform: translate(-50%, -50%);
+}
+
 mat-dialog-container {
   padding: 0 !important;
 }

@@ -39,7 +39,8 @@
 
   <div class="daily-content" *ngIf="animationState==='0'">
     <img [src]="daily.picture2">
-    <div class="daily">
+    <div class="daily-blur center" [style.backgroundImage]="'url('+ daily.picture2 +')'"></div>
+    <div class="center">
       <p>{{daily.content}}</p>
       <p>{{daily.note}}</p>
     </div>

@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   listListener;
   animationState = '0';
   inputChange = new Subject();
-  private daily;
+  private daily: any;
   private history = [];
   private spellSuggest = [];
 

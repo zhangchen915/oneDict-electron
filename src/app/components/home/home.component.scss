@@ -66,27 +66,31 @@
     width: 100%;
     border-radius: 5px;
     overflow: hidden;
+    p {
+      margin: 0;
+    }
+
+    .daily-center{
+      width: 60%;
+      margin: 20%;
+    }
+
+    .daily-blur {
+      position: absolute;
+      width: 60%;
+      height: 60%;
+      filter: blur(20px);
+      background: no-repeat center;
+      background-size: 170%;
+    }
 
     img {
       width: 100%;
-      filter: blur(3px);
-    }
-
-    .daily {
-      position: absolute;
-      padding: 0 10px;
-      left: 0;
-      bottom: 10px;
-      background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9));
-
-      p {
-        margin-bottom: 0;
-      }
+      display: block;
     }
   }
 
   .result {
-
     height: 80%;
     margin-right: auto;
     margin-left: auto;
