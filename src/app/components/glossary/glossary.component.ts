@@ -13,8 +13,8 @@ import {GlossaryDocumentType} from '../../schemas/glossary.schema';
   templateUrl: './glossary.component.html',
   styleUrls: ['./glossary.component.scss']
 })
-export class GlossaryComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['select', 'word', 'addTime'];
+export class GlossaryComponent implements OnInit {
+  displayedColumns: string[] = ['select', 'word', 'definition', 'addTime'];
   dataSource: MatTableDataSource<GlossaryDocumentType>;
   selection = new SelectionModel<GlossaryDocumentType>(true, []);
 
@@ -46,17 +46,5 @@ export class GlossaryComponent implements OnInit, OnDestroy {
     this.dataSource = new MatTableDataSource(await this.dbService.getGlossary());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  // applyFilter(filterValue: string) {
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-  //
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
-
-  ngOnDestroy(): void {
-
   }
 }

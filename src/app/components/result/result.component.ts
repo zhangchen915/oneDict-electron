@@ -43,6 +43,6 @@ export class ResultComponent implements OnInit, OnDestroy {
 
   async ngOnDestroy() {
     if (this.like === this._like) return;
-    await this.dbService.updateGlossary(this._word, this.like);
+    await this.dbService.updateGlossary(this._word, this.like, this.res.base);
   }
 }

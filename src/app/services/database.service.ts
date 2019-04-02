@@ -162,7 +162,7 @@ export class DatabaseService {
     return await this.db.glossary.findOne({word: {$eq: word}}).exec().then(res => !!res);
   }
 
-  async updateGlossary(word, like) {
+  async updateGlossary(word: string, like: boolean, base: Array<string>) {
     const query = this.db.glossary.findOne({word: {$eq: word}});
     if (like) {
       await query.exec().then(async res => {
@@ -171,7 +171,7 @@ export class DatabaseService {
           await query.update({word});
         } else {
           await this.db.glossary.insert({
-            word, addTime: new Date().toLocaleString(),
+            word, definition: base.join(' '), addTime: new Date().toLocaleString(),
           });
         }
       });

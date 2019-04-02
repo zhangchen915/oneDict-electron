@@ -2,6 +2,7 @@ import {RxJsonSchema, RxDocument, RxCollection} from 'rxdb';
 
 export interface GlossaryDocumentType {
   word: string;
+  definition: string;
   addTime: string;
 }
 
@@ -20,12 +21,16 @@ const schema: RxJsonSchema = {
       primary: true,
       default: ''
     },
+    definition: {
+      type: 'string',
+      default: ''
+    },
     addTime: {
       type: 'string',
       default: ''
     }
   },
-  required: ['word', 'addTime']
+  required: ['word', 'definition', 'addTime']
 };
 
 export default schema;
