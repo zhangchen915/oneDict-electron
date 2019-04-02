@@ -8,6 +8,13 @@
 .glossary-content {
   padding: 20px;
 
+  .glossary-control {
+    margin-bottom: 10px;
+    button {
+      margin-right: 5px;
+    }
+  }
+
   table {
     width: 100%;
   }

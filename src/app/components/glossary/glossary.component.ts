@@ -14,7 +14,7 @@ import {GlossaryDocumentType} from '../../schemas/glossary.schema';
   styleUrls: ['./glossary.component.scss']
 })
 export class GlossaryComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['id', 'word', 'addTime'];
+  displayedColumns: string[] = ['select', 'word', 'addTime'];
   dataSource: MatTableDataSource<GlossaryDocumentType>;
   selection = new SelectionModel<GlossaryDocumentType>(true, []);
 
