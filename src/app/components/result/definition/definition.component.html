@@ -1,20 +1,20 @@
 <div class="definition selectable">
   <div *ngIf="type.name=='科林斯词典'">
-    <div *ngIf="res.collins">
-      <div *ngFor="let entry of res.collins.entry">
+    <ol *ngIf="res.collins">
+      <li *ngFor="let entry of res.collins.entry">
         <div *ngFor="let e of entry.tran_entry">
           <div *ngIf="e.tran">
             <div [innerHTML]="e.tran"></div>
-            <div *ngIf="e.exam_sents">
-              <div class="example-content" *ngFor="let sent of e.exam_sents.sent">
+            <ul *ngIf="e.exam_sents">
+              <li class="example-content" *ngFor="let sent of e.exam_sents.sent">
                 <div>{{sent.eng_sent}}</div>
                 <div>{{sent.chn_sent}}</div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
+      </li>
+    </ol>
   </div>
 
   <div *ngIf="type.name=='牛津词典'">

@@ -6,7 +6,6 @@
         <app-like [(like)]=like></app-like>
         <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
         <div class="phonetic">
-          <mat-icon>record_voice_over</mat-icon>
           <mat-chip-list>
             <mat-chip class="pointer" *ngFor="let name of res.phonetic" [audio]="name.filename">
               <img [src]="'../../../assets/images/'+name.type+'.svg'"/>
