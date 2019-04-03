@@ -22,9 +22,10 @@
       </div>
     </mat-tab>
 
-    <mat-tab *ngFor="let tab of tabs">
-      <ng-template mat-tab-label>{{tab.name}}</ng-template>
-      <app-definition [type]="tab" [word]="_word" [res]="res"></app-definition>
+    <mat-tab *ngFor="let tab of tabs" [label]="tab.name">
+      <ng-template matTabContent>
+        <app-definition [type]="tab" [word]="_word" [res]="res"></app-definition>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>
