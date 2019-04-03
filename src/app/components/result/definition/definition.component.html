@@ -19,10 +19,10 @@
 
   <div *ngIf="type.name=='牛津词典'">
     <div [innerHTML]="res.phrases"></div>
-    <div *ngFor="let content of res.content">
+    <ol *ngFor="let content of res.oxford.content">
       <div>{{content.item.pos}}</div>
 
-      <div *ngFor="let core of content.item.core">
+      <li *ngFor="let core of content.item.core">
         <div [italic]="core.detail.en"></div>
         <div>{{core.detail.zh}}</div>
         <div class="example-content" *ngFor="let example of core.example">
@@ -30,18 +30,20 @@
           <div>{{example.zh}}</div>
         </div>
         <div class="branch" *ngIf="core.branch">
-          <div *ngFor="let branch of core.branch">
-            <div>{{branch.detail.en}}</div>
-            <div>{{branch.detail.zh}}</div>
-            <div class="example-content" *ngFor="let example of branch.example">
-              <div [italic]="example.en"></div>
-              <div>{{example.zh}}</div>
-            </div>
-          </div>
+          <ul *ngFor="let branch of core.branch">
+            <li>
+              <div [italic]="branch.detail.en"></div>
+              <div>{{branch.detail.zh}}</div>
+              <div class="example-content" *ngFor="let example of branch.example">
+                <div [italic]="example.en"></div>
+                <div>{{example.zh}}</div>
+              </div>
+            </li>
+          </ul>
         </div>
-      </div>
+      </li>
 
-    </div>
+    </ol>
   </div>
 
   <div *ngIf="!type.web" [innerHtml]="definition"></div>
