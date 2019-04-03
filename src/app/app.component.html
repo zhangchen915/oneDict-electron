@@ -6,6 +6,13 @@
     <main [@routeAnimations]="routeTrigger | async">
       <router-outlet></router-outlet>
     </main>
-    <div class="close pointer" (click)="close()"></div>
+    <div class="close">
+      <button mat-button (click)="electronService.remote.getCurrentWindow().minimize()">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <button mat-button (click)="electronService.remote.getCurrentWindow().close()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

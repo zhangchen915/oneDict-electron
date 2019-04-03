@@ -56,10 +56,6 @@ export class AppComponent implements OnInit, OnDestroy {
     await this.mdict.init();
   }
 
-  close() {
-    this.electronService.remote.getCurrentWindow().close();
-  }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
