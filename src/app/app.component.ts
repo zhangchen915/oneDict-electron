@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ElectronService} from './providers/electron.service';
 import {TranslateService} from '@ngx-translate/core';
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {AppConfig} from '../environments/environment';
 import {MessageService} from './services/message.service';
 import {Observable, Subscription} from 'rxjs';
@@ -16,14 +17,15 @@ import {MdictService} from './services/mdict.service';
   animations: [RouterAnimation]
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private sidenavState: boolean;
+  public sidenavState: boolean;
   private subscription: Subscription;
   routeTrigger: Observable<object>;
 
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
               private message: MessageService,
-              private mdict: MdictService) {
+              private mdict: MdictService,
+              public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
 
@@ -52,6 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }).then(async res => {
       localStorage.setItem('daily', await res.text());
     });
+
+    if (this.jwtHelper.isTokenExpired()) this.message.openSnackBar('登陆已过期，请重新登录');
 
     await this.mdict.init();
   }
