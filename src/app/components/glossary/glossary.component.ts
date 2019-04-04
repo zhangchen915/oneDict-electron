@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {DatabaseService} from '../../services/database.service';
 import {FormBuilder} from '@angular/forms';
 import {MessageService} from '../../services/message.service';

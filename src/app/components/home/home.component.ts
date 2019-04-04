@@ -24,13 +24,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   animationState = '0';
   inputChange = new Subject();
   private daily: any;
-  private history = [];
-  private spellSuggest = [];
+  history = [];
+  spellSuggest = [];
 
   @ViewChild('list') $list;
 
   constructor(private renderer: Renderer2,
-              private message: MessageService,
+              public message: MessageService,
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,
@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   onChange() {
-    this.inputChange.next(this.word);
+    this.inputChange.next(this.word.trim().toLowerCase());
   }
 
   enterClick(e) {
