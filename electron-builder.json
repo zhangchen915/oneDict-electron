@@ -20,7 +20,7 @@
         "!tslint.json"
     ],
   "win": {
-    "icon": "dist",
+    "icon": "dist/favicon.ico",
     "target": [
       "portable"
     ]

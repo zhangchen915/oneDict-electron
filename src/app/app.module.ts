@@ -44,6 +44,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +73,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ScrollToModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => localStorage.getItem('access_token'),
+        tokenGetter,
         whitelistedDomains: ['youdao.com', 'sogou.com', 'iciba.com'],
         blacklistedRoutes: [config.domain]
       }
