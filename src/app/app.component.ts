@@ -9,6 +9,7 @@ import {RouterAnimation} from './animations/router.animation';
 import {map, pairwise, startWith} from 'rxjs/operators';
 import {getDaily} from './util';
 import {MdictService} from './services/mdict.service';
+import {ResultApiService} from './providers/result.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
               private message: MessageService,
+              private result: ResultApiService,
               private mdict: MdictService,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
@@ -54,6 +56,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }).then(async res => {
       localStorage.setItem('daily', await res.text());
     });
+
+    this.result.sougoTokenInit();
 
     if (this.jwtHelper.isTokenExpired()) this.message.openSnackBar('登陆已过期，请重新登录');
 

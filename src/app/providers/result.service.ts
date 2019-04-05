@@ -68,6 +68,10 @@ export class ResultApiService {
       ));
   }
 
+  sougoTokenInit() {
+    if (!localStorage.getItem('sougoToken')) this.updateSougoToken();
+  }
+
   updateSougoToken() {
     return this.http.get('https://fanyi.sogou.com', {responseType: 'text'}).pipe(
       tap(html => {

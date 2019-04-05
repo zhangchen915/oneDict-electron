@@ -37,7 +37,7 @@
     </mat-chip-list>
   </div>
 
-  <div class="daily-content" *ngIf="animationState==='0'">
+  <div class="daily-content" *ngIf="animationState==='0' && daily.picture2">
     <img [src]="daily.picture2">
     <div class="daily-blur center" [style.backgroundImage]="'url('+ daily.picture2 +')'"></div>
     <div class="center">

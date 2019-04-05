@@ -64,15 +64,15 @@ function createWindow() {
 
 try {
   // remove so we can register each time as we run the app.
-  app.removeAsDefaultProtocolClient('onedict');
-
-  if (process.platform === 'win32') {
-    // Set the path of electron.exe and your app.
-    // These two additional parameters are only available on windows.
-    app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
-  } else {
-    app.setAsDefaultProtocolClient('onedict');
-  }
+  // app.removeAsDefaultProtocolClient('onedict');
+  //
+  // if (process.platform === 'win32') {
+  //   // Set the path of electron.exe and your app.
+  //   // These two additional parameters are only available on windows.
+  //   app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
+  // } else {
+  //   app.setAsDefaultProtocolClient('onedict');
+  // }
 
   dictionary((err, dict) => {
     if (err) throw err;
