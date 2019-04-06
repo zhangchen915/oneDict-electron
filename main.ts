@@ -50,29 +50,22 @@ function createWindow() {
     }));
   }
 
-  win.webContents.openDevTools();
+  if ('ELECTRON_IS_DEV' in process.env) win.webContents.openDevTools();
 
-  // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store window
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null;
-  });
-
+  win.on('closed', () => win = null);
 }
 
 try {
   // remove so we can register each time as we run the app.
-  // app.removeAsDefaultProtocolClient('onedict');
-  //
-  // if (process.platform === 'win32') {
-  //   // Set the path of electron.exe and your app.
-  //   // These two additional parameters are only available on windows.
-  //   app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
-  // } else {
-  //   app.setAsDefaultProtocolClient('onedict');
-  // }
+  app.removeAsDefaultProtocolClient('onedict');
+
+  if ('ELECTRON_IS_DEV' in process.env && process.platform === 'win32') {
+    // Set the path of electron.exe and your app.
+    // These two additional parameters are only available on windows.
+    app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
+  } else {
+    app.setAsDefaultProtocolClient('onedict');
+  }
 
   dictionary((err, dict) => {
     if (err) throw err;
@@ -105,6 +98,5 @@ try {
   });
 
 } catch (e) {
-  // Catch Error
-  // throw e;
+  throw e;
 }
