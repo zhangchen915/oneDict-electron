@@ -1,13 +1,4 @@
 <div class="container">
-  <div class="top-bar">
-    <button mat-button (click)="message.toggleSidenav()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <button mat-button (click)="openDialog()">
-      <mat-icon>person</mat-icon>
-    </button>
-  </div>
-
   <div [@openClose]="animationState" class="search-container">
     <mat-form-field class="search-input">
       <input type="text" matInput placeholder="请输入单词" [(ngModel)]="word" (ngModelChange)="onChange()"

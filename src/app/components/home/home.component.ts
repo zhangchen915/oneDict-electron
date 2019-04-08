@@ -8,8 +8,6 @@ import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {getDaily} from '../../util';
 import {DatabaseService} from '../../services/database.service';
-import {LoginComponent} from '../login/login.component';
-import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -34,8 +32,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,
-              private dbService: DatabaseService,
-              private dialog: MatDialog) {
+              private dbService: DatabaseService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
     });
@@ -80,14 +77,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   getPart(item) {
     return item.means.length ? item.means[0].part : '';
-  }
-
-  openDialog(): void {
-    this.dialog.open(LoginComponent, {
-      width: '300px',
-      height: '300px',
-      data: {username: ''}
-    });
   }
 
   onChange() {

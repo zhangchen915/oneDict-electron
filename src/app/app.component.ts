@@ -10,6 +10,8 @@ import {map, pairwise, startWith} from 'rxjs/operators';
 import {getDaily} from './util';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
+import {LoginComponent} from './components/login/login.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private message: MessageService,
               private result: ResultApiService,
               private mdict: MdictService,
+              private dialog: MatDialog,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
     console.log('AppConfig', AppConfig);
@@ -62,6 +65,14 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.jwtHelper.isTokenExpired()) this.message.openSnackBar('登陆已过期，请重新登录');
 
     await this.mdict.init();
+  }
+
+  openDialog(): void {
+    this.dialog.open(LoginComponent, {
+      width: '300px',
+      height: '300px',
+      data: {username: ''}
+    });
   }
 
   ngOnDestroy() {

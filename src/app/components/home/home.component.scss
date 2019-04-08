@@ -9,12 +9,7 @@
   padding: 0 10%;
   background-image: linear-gradient(-120deg, #26e289, #1a5fa2 100%, red 200%);
 
-  .top-bar {
-    position: absolute;
-    z-index: 999;
-  }
-
-  .history{
+  .history {
     margin-bottom: 10px;
   }
 
@@ -70,11 +65,12 @@
     width: 100%;
     border-radius: 5px;
     overflow: hidden;
+
     p {
       margin: 0;
     }
 
-    .daily-center{
+    .daily-center {
       width: 60%;
       margin: 20%;
     }

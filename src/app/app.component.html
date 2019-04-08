@@ -7,12 +7,22 @@
       <router-outlet></router-outlet>
     </main>
     <div class="top-control">
-      <button mat-button (click)="electronService.remote.getCurrentWindow().minimize()">
-        <mat-icon>remove</mat-icon>
-      </button>
-      <button mat-button (click)="electronService.remote.getCurrentWindow().close()">
-        <mat-icon>close</mat-icon>
-      </button>
+      <div>
+        <button mat-button (click)="message.toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <button mat-button (click)="openDialog()">
+          <mat-icon>person</mat-icon>
+        </button>
+      </div>
+      <div>
+        <button mat-button (click)="electronService.remote.getCurrentWindow().minimize()">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <button mat-button (click)="electronService.remote.getCurrentWindow().close()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
