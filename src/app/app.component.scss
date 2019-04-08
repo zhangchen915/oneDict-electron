@@ -15,10 +15,18 @@
     overflow: hidden;
   }
 
-  .close {
+  .top-control {
     position: absolute;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
     right: 0;
     top: 0;
+    -webkit-app-region: drag;
+
+    button {
+      -webkit-app-region: no-drag;
+    }
   }
 }
 

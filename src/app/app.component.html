@@ -6,7 +6,7 @@
     <main [@routeAnimations]="routeTrigger | async">
       <router-outlet></router-outlet>
     </main>
-    <div class="close">
+    <div class="top-control">
       <button mat-button (click)="electronService.remote.getCurrentWindow().minimize()">
         <mat-icon>remove</mat-icon>
       </button>
