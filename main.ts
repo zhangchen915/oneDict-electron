@@ -50,7 +50,7 @@ function createWindow() {
     }));
   }
 
-  if ('ELECTRON_IS_DEV' in process.env) win.webContents.openDevTools();
+  if (!app.isPackaged) win.webContents.openDevTools();
 
   win.on('closed', () => win = null);
 }
@@ -59,7 +59,7 @@ try {
   // remove so we can register each time as we run the app.
   app.removeAsDefaultProtocolClient('onedict');
 
-  if ('ELECTRON_IS_DEV' in process.env && process.platform === 'win32') {
+  if (!app.isPackaged && process.platform === 'win32') {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
     app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
