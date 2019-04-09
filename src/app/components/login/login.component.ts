@@ -3,6 +3,7 @@ import {MatDialogRef, MAT_DIALOG_DATA, ErrorStateMatcher} from '@angular/materia
 import {LoginService} from '../../providers/login.service';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {MessageService} from '../../services/message.service';
+import {DatabaseService} from '../../services/database.service';
 
 class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private user: LoginService,
               private message: MessageService,
+              private dbService: DatabaseService,
               @Inject(MAT_DIALOG_DATA) public data) {
   }
 
@@ -57,8 +59,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     const {email, password} = value;
     this.user.login({email, password}).subscribe(res => {
       if (res) {
-        this.message.openSnackBar('登陆成功');
+        this.message.setLoginState(true);
         localStorage.setItem('email', email);
+        this.dbService.setSync(email);
         this.dialogRef.close();
       } else {
         this.message.openSnackBar('登陆失败');

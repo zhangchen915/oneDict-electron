@@ -23,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public sidenavState: boolean;
   private subscription: Subscription;
   routeTrigger: Observable<object>;
+  username = localStorage.getItem('email');
 
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
@@ -32,10 +33,9 @@ export class AppComponent implements OnInit, OnDestroy {
               private dialog: MatDialog,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
-    console.log('AppConfig', AppConfig);
 
-    this.sidenavState = this.message.sidenavState.getValue();
-    this.routeTrigger = this.message.sidenavIndex.pipe(
+    this.sidenavState = message.sidenavState.getValue();
+    this.routeTrigger = message.sidenavIndex.pipe(
       startWith(0),
       pairwise(),
       map(([prev, curr]) => ({
@@ -62,17 +62,30 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.result.sougoTokenInit();
 
-    if (this.jwtHelper.isTokenExpired()) this.message.openSnackBar('登陆已过期，请重新登录');
+    if (this.jwtHelper.isTokenExpired()) {
+      // TODO 续期
+      this.message.openSnackBar('登陆已过期，请重新登录');
+    }
 
     await this.mdict.init();
   }
 
-  openDialog(): void {
-    this.dialog.open(LoginComponent, {
-      width: '300px',
-      height: '300px',
-      data: {username: ''}
-    });
+  openDialog() {
+    if (this.message.loginState.getValue()) {
+      this.message.openSnackBar('您已经登录', '退出').then(snack =>
+        snack.onAction().subscribe(() => {
+          localStorage.setItem('access_token', '');
+          // localStorage.setItem('email', '');
+          this.username = '';
+          this.message.setLoginState(false);
+        }));
+    } else {
+      this.dialog.open(LoginComponent, {
+        width: '300px',
+        height: '300px',
+        data: {username: ''}
+      });
+    }
   }
 
   ngOnDestroy() {

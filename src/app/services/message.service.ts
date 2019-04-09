@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {MatSnackBar} from '@angular/material';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -8,8 +9,10 @@ import {MatSnackBar} from '@angular/material';
 export class MessageService {
   sidenavState = new BehaviorSubject<boolean>(true);
   sidenavIndex = new BehaviorSubject<number>(0);
+  loginState = new BehaviorSubject<boolean>(!this.jwtHelper.isTokenExpired());
 
-  constructor(private snackBar: MatSnackBar) {
+  constructor(private snackBar: MatSnackBar,
+              private jwtHelper: JwtHelperService) {
   }
 
   toggleSidenav() {
@@ -20,12 +23,15 @@ export class MessageService {
     return this.sidenavState.asObservable();
   }
 
+  setLoginState(state: boolean) {
+    this.openSnackBar(state ? '登陆成功' : '已退出');
+    this.loginState.next(state);
+  }
+
   openSnackBar(message: string, action?: string) {
-    Promise.resolve().then(() => {
-      this.snackBar.open(message, action, {
-        duration: 1000,
-        horizontalPosition: 'right'
-      });
-    });
+    return Promise.resolve().then(() => this.snackBar.open(message, action, {
+      duration: 1000,
+      horizontalPosition: 'right'
+    }));
   }
 }
