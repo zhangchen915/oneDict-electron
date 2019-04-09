@@ -1,12 +1,16 @@
 import {Injectable} from '@angular/core';
-import fileSchema, {FileDocument, FileDocumentType, FileCollection} from '../schemas/file.schema';
+import fileSchema, {FileCollection, FileDocument, FileDocumentType} from '../schemas/file.schema';
 import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
-import glossarySchema, {GlossaryCollection, GlossaryDocument, GlossaryDocumentType} from '../schemas/glossary.schema';
+import glossarySchema, {GlossaryCollection} from '../schemas/glossary.schema';
 import RxDB from 'rxdb/plugins/core';
-
 // import modules
-import RxDBSchemaCheckModule from 'rxdb/plugins/schema-check';
-import RxDBErrorMessagesModule from 'rxdb/plugins/error-messages';
+import RxDBValidateModule from 'rxdb/plugins/validate';
+import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
+import RxDBReplicationModule from 'rxdb/plugins/replication';
+// always needed for replication with the node-server
+import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
+import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
+import {RxDatabase} from 'rxdb';
 
 // if (ENV === 'development') {
 //   // in dev-mode we show full error-messages
@@ -16,25 +20,10 @@ import RxDBErrorMessagesModule from 'rxdb/plugins/error-messages';
 //   RxDB.plugin(RxDBSchemaCheckModule);
 // }
 
-import RxDBValidateModule from 'rxdb/plugins/validate';
-
 RxDB.plugin(RxDBValidateModule);
-
-import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
-
 RxDB.plugin(RxDBLeaderElectionModule);
-
-import RxDBReplicationModule from 'rxdb/plugins/replication';
-
 RxDB.plugin(RxDBReplicationModule);
-// always needed for replication with the node-server
-import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
-
 RxDB.plugin(PouchdbAdapterHttp);
-
-import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
-import {RxDatabase} from 'rxdb';
-
 RxDB.plugin(PouchdbAdapterIdb);
 
 interface Collections {
@@ -61,8 +50,7 @@ const collections = [
   }
 ];
 
-console.log('hostname: ' + window.location.hostname);
-// const syncURL = 'http://' + window.location.hostname + ':10101/';
+const syncURL = username => `http://localhost:3000/db/user-${Buffer.from(username, 'utf8').toString('hex')}`;
 
 // let doSync = true;
 // if (window.location.hash === '#nosync') doSync = false;
@@ -105,12 +93,6 @@ async function _create(): Promise<Database> {
         if (has != null) db.collections.file.delete(has);
       });
   }, true);
-
-  // sync with server
-  // console.log('DatabaseService: sync');
-  // await db.file.sync({
-  //   remote: syncURL + '/file'
-  // });
 
   db.collections.file.find().exec().then(res => {
     if (!res.length) {
@@ -183,5 +165,19 @@ export class DatabaseService {
   async getGlossary(skip: number = 0) {
     return await this.db.glossary.find().exec().then(
       res => res.map(e => e.toJSON()));
+  }
+
+  setSync(username) {
+    const sync = {
+      remote: syncURL(username),
+      waitForLeadership: true,   // (optional) [default=true] to save performance, the sync starts on leader-instance only
+      options: {                 // sync-options (optional) from https://pouchdb.com/api.html#replication
+        live: true,
+        retry: true
+      }
+    };
+
+    this.db.history.sync(sync);
+    // this.db.glossary.sync(sync);
   }
 }
