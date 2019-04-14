@@ -55,23 +55,27 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  private setLogin(value, err: boolean, errMessage: string) {
+    const {email} = value;
+    if (!err) {
+      this.message.setLoginState(email);
+      localStorage.setItem('email', email);
+      this.dbService.setSync(email);
+      this.dialogRef.close();
+    } else {
+      this.message.openSnackBar(errMessage);
+    }
+  }
+
   login(value) {
-    const {email, password} = value;
-    this.user.login({email, password}).subscribe(res => {
-      if (res) {
-        this.message.setLoginState(true);
-        localStorage.setItem('email', email);
-        this.dbService.setSync(email);
-        this.dialogRef.close();
-      } else {
-        this.message.openSnackBar('登陆失败');
-      }
+    this.user.login(value).subscribe(err => {
+      this.setLogin(value, err, '登陆失败');
     });
   }
 
   register(value) {
-    this.user.register(value).subscribe(res => {
-      this.message.openSnackBar('注册成功');
+    this.user.register(value).subscribe(err => {
+      this.setLogin(value, err, '注册失败');
     });
   }
 
