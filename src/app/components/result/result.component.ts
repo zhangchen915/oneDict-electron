@@ -13,10 +13,10 @@ export class ResultComponent implements OnInit, OnDestroy {
   @Input()
   set word(word: string) {
     this._word = word;
-    this.getRes(word);
+    if (word) this.getRes(word);
   }
 
-  res;
+  res: any;
   like = false;
   _like: boolean;
   tabs = [];
