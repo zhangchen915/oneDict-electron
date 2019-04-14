@@ -9,7 +9,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 export class MessageService {
   sidenavState = new BehaviorSubject<boolean>(true);
   sidenavIndex = new BehaviorSubject<number>(0);
-  loginState = new BehaviorSubject<boolean>(!this.jwtHelper.isTokenExpired());
+  loginState = new BehaviorSubject<string>(this.jwtHelper.isTokenExpired() ? '' : localStorage.getItem('email'));
 
   constructor(private snackBar: MatSnackBar,
               private jwtHelper: JwtHelperService) {
@@ -23,7 +23,7 @@ export class MessageService {
     return this.sidenavState.asObservable();
   }
 
-  setLoginState(state: boolean) {
+  setLoginState(state) {
     this.openSnackBar(state ? '登陆成功' : '已退出');
     this.loginState.next(state);
   }

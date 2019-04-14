@@ -23,7 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public sidenavState: boolean;
   private subscription: Subscription;
   routeTrigger: Observable<object>;
-  username = localStorage.getItem('email');
+  username;
 
   constructor(public electronService: ElectronService,
               private translate: TranslateService,
@@ -49,9 +49,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.subscription = this.message.getSidenavState().subscribe(msg => {
-      this.sidenavState = msg;
-    });
+    this.subscription = this.message.getSidenavState().subscribe(msg => this.sidenavState = msg);
+    this.message.loginState.subscribe(name => this.username = name);
 
     const daily = getDaily();
     if (!daily || new Date().toDateString() !== new Date(daily.dateline).toDateString()) fetch('http://open.iciba.com/dsapi', {
@@ -75,9 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.message.openSnackBar('您已经登录', '退出').then(snack =>
         snack.onAction().subscribe(() => {
           localStorage.setItem('access_token', '');
-          // localStorage.setItem('email', '');
-          this.username = '';
-          this.message.setLoginState(false);
+          this.message.setLoginState('');
         }));
     } else {
       this.dialog.open(LoginComponent, {
