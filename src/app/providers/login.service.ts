@@ -4,36 +4,37 @@ import {map, retry} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import config from '../../../config';
 
-
 @Injectable()
 export class LoginService {
-
   constructor(private http: HttpClient) {
   }
 
-  login(payload) {
-    return this.http.post(`//${config.domain}/auth/login`, params(payload), {
+  private setToken(token = '') {
+    localStorage.setItem('access_token', token);
+  }
+
+  private post(payload, url) {
+    return this.http.post(`//${config.domain}${url}`, params(payload), {
       headers: new HttpHeaders({
         'Content-Type': 'application/x-www-form-urlencoded'
       })
     }).pipe(
       map((result: any) => {
-        localStorage.setItem('access_token', result);
-        return true;
+        this.setToken(result.token);
+        return result.error;
       }),
       retry(2));
   }
 
+  login(payload) {
+    return this.post(payload, '/auth/login');
+  }
+
   register(payload) {
-    return this.http.post(`//${config.domain}/register`, params(payload), {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/x-www-form-urlencoded'
-      })
-    }).pipe(
-      retry(2));
+    return this.post(payload, '/register');
   }
 
   logout() {
-    localStorage.removeItem('access_token');
+    this.setToken();
   }
 }
