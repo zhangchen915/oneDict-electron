@@ -9,6 +9,16 @@
     overflow-y: scroll;
     overflow-x: hidden;
 
+    .stare {
+      display: inline-block;
+      vertical-align: super;
+
+      .stare-icon {
+        display: inline-block;
+        -webkit-text-fill-color: #edb867;
+      }
+    }
+
     .phonetic {
       img {
         width: 20px;

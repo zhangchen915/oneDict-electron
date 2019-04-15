@@ -3,8 +3,11 @@
     <mat-tab>
       <ng-template mat-tab-label>基本释义</ng-template>
       <div class="definition" *ngIf="res">
+        <div class="stare">
+          <mat-icon class="stare-icon"
+                    *ngFor="let i of [1,2,3,4,5]">{{i <= res.collins.star ? 'stare' : 'star_border'}}</mat-icon>
+        </div>
         <app-like [(like)]=like></app-like>
-        <bar-rating [rate]="res.collins.star" [max]="5" [readOnly]="true"></bar-rating>
         <div class="phonetic">
           <mat-chip-list>
             <mat-chip class="pointer" *ngFor="let name of res.oxford.phonetic" [audio]="name.filename">
