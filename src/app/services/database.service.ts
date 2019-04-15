@@ -11,6 +11,7 @@ import RxDBReplicationModule from 'rxdb/plugins/replication';
 import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
 import {RxDatabase} from 'rxdb';
+import config from '../../../config';
 
 // if (ENV === 'development') {
 //   // in dev-mode we show full error-messages
@@ -50,7 +51,7 @@ const collections = [
   }
 ];
 
-const syncURL = username => `http://localhost:3000/db/user-${Buffer.from(username, 'utf8').toString('hex')}`;
+const syncURL = username => `http://${config.domain}/db/userdb-${Buffer.from(username, 'utf8').toString('hex')}`;
 
 // let doSync = true;
 // if (window.location.hash === '#nosync') doSync = false;

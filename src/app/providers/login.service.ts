@@ -3,10 +3,12 @@ import {params} from '../util';
 import {map, retry} from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import config from '../../../config';
+import {MessageService} from '../services/message.service';
 
 @Injectable()
 export class LoginService {
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private message: MessageService) {
   }
 
   private setToken(token = '') {
@@ -36,5 +38,6 @@ export class LoginService {
 
   logout() {
     this.setToken();
+    this.message.setLoginState('');
   }
 }

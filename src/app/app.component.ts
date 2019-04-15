@@ -12,6 +12,8 @@ import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
 import {LoginComponent} from './components/login/login.component';
 import {MatDialog} from '@angular/material';
+import {DatabaseService} from './services/database.service';
+import {LoginService} from './providers/login.service';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
               private result: ResultApiService,
               private mdict: MdictService,
               private dialog: MatDialog,
+              private user: LoginService,
+              private dbService: DatabaseService,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
 
@@ -48,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscription = this.message.getSidenavState().subscribe(msg => this.sidenavState = msg);
     this.message.loginState.subscribe(name => this.username = name);
 
@@ -66,16 +70,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.message.openSnackBar('登陆已过期，请重新登录');
     }
 
-    await this.mdict.init();
+    if (this.username) this.dbService.setSync(this.username);
+    this.mdict.init();
   }
 
   openDialog() {
     if (this.message.loginState.getValue()) {
-      this.message.openSnackBar('您已经登录', '退出').then(snack =>
-        snack.onAction().subscribe(() => {
-          localStorage.setItem('access_token', '');
-          this.message.setLoginState('');
-        }));
+      this.message.openSnackBar('您已经登录', '退出')
+        .then(snack => snack.onAction().subscribe(() => this.user.logout()));
     } else {
       this.dialog.open(LoginComponent, {
         width: '300px',
