@@ -22,18 +22,20 @@
     <app-result [word]="word"></app-result>
   </div>
 
-  <div class="history" *ngIf="history.length">
-    <mat-chip-list>
-      <mat-chip class="pointer" *ngFor="let e of history">{{e.word}}</mat-chip>
-    </mat-chip-list>
-  </div>
+  <div *ngIf="animationState==='0'">
+    <div class="history" *ngIf="history.length">
+      <mat-chip-list>
+        <mat-chip class="pointer" *ngFor="let e of history">{{e.word}}</mat-chip>
+      </mat-chip-list>
+    </div>
 
-  <div class="daily-content" *ngIf="animationState==='0' && daily.picture2">
-    <img [src]="daily.picture2">
-    <div class="daily-blur center" [style.backgroundImage]="'url('+ daily.picture2 +')'"></div>
-    <div class="center">
-      <p>{{daily.content}}</p>
-      <p>{{daily.note}}</p>
+    <div class="daily-content" *ngIf="daily.picture2">
+      <img [src]="daily.picture2">
+      <div class="daily-blur center" [style.backgroundImage]="'url('+ daily.picture2 +')'"></div>
+      <div class="center">
+        <p>{{daily.content}}</p>
+        <p>{{daily.note}}</p>
+      </div>
     </div>
   </div>
 
