@@ -47,7 +47,7 @@ const collections = [
   }, {
     name: 'glossary',
     schema: glossarySchema,
-    sync: false
+    sync: false,
   }
 ];
 
@@ -135,7 +135,6 @@ export class DatabaseService {
       res => res.map(e => e.toJSON()));
   }
 
-  // .sort({'searchTime': 'desc'})
   async getHistory() {
     return await this.db.history.find().limit(15).exec().then(
       res => res.map(e => e.toJSON()));
@@ -148,16 +147,7 @@ export class DatabaseService {
   async updateGlossary(word: string, like: boolean, base: Array<string>) {
     const query = this.db.glossary.findOne({word: {$eq: word}});
     if (like) {
-      await query.exec().then(async res => {
-
-        if (!!res) {
-          await query.update({word});
-        } else {
-          await this.db.glossary.insert({
-            word, definition: base.join(' '), addTime: new Date().toLocaleString(),
-          });
-        }
-      });
+      await this.db.glossary.upsert({word, definition: base.join(' '), addTime: new Date().toLocaleString()});
     } else {
       await query.remove();
     }
