@@ -23,7 +23,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   inputChange = new Subject();
   daily: any;
   history = [];
-  spellSuggest = [];
+  spell = {
+    correct: false,
+    suggest: []
+  };
 
   @ViewChild('list') $list;
 
@@ -40,12 +43,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.inputChange.pipe(
       debounce(() => timer(300))
     ).subscribe(e => {
-      this.spellSuggest = this.suggest.spell(e);
-
       if (!e) {
         this.animationState = '0';
       } else {
         this.animationState = '1';
+        this.spell = this.suggest.spell(e);
         this.suggest.icibaSuggest(e).subscribe(res => this.items = res);
       }
     });
@@ -66,9 +68,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   async search(word = this.word) {
-    this.word = word;
+    this.word = word.toLowerCase();
     this.animationState = '2';
-    this.spellSuggest = [];
+    this.spell.suggest = [];
     await this.dbService.db.history.insert({
       word,
       searchTime: new Date().toLocaleString()
@@ -83,7 +85,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.inputChange.next(this.word.trim().toLowerCase());
   }
 
-  enterClick(e) {
-    if (e.key === 'Enter' && this.word) this.search();
+  enterClick() {
+    if (!this.word) return;
+    if (!this.spell.correct) return this.message.openSnackBar('您输入的单词不正确');
+    this.search();
   }
 }

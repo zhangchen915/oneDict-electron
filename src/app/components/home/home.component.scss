@@ -10,7 +10,7 @@
   background-image: linear-gradient(-120deg, #26e289, #1a5fa2 100%, red 200%);
 
   .history {
-    margin-bottom: 10px;
+    padding-bottom: 15px;
   }
 
   .search-container {
@@ -48,6 +48,7 @@
 
         .search-item {
           height: 35px;
+          line-height: 35px;
 
           &:hover {
             text-shadow: 0 0 0.2em #a9a9a9;

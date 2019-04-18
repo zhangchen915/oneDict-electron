@@ -28,8 +28,8 @@ export class SuggestService {
   constructor(private http: HttpClient) {
   }
 
-  spell(word): Array<string> {
-    return ipcRenderer.sendSync('getSpellSuggest', word);
+  spell(word) {
+    return ipcRenderer.sendSync('getSpell', word);
   }
 
   getSuggest(word) {
