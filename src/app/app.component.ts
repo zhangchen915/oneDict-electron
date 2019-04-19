@@ -70,7 +70,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.message.openSnackBar('登陆已过期，请重新登录');
     }
 
-    if (this.username) this.dbService.setSync(this.username);
+    if (this.username) this.dbService.setSync();
     this.mdict.init();
   }
 

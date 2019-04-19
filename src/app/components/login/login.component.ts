@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!err) {
       this.message.setLoginState(email);
       localStorage.setItem('email', email);
-      this.dbService.setSync(email);
+      this.dbService.setSync();
       this.dialogRef.close();
     } else {
       this.message.openSnackBar(errMessage);

@@ -12,6 +12,7 @@ import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
 import {RxDatabase} from 'rxdb';
 import config from '../../../config';
+import {MessageService} from './message.service';
 
 // if (ENV === 'development') {
 //   // in dev-mode we show full error-messages
@@ -38,32 +39,26 @@ type Database = RxDatabase<Collections>;
 const collections = [
   {
     name: 'file',
-    schema: fileSchema,
-    sync: false
+    schema: fileSchema
   }, {
     name: 'history',
-    schema: historySchema,
-    sync: false
+    schema: historySchema
   }, {
     name: 'glossary',
-    schema: glossarySchema,
-    sync: false,
+    schema: glossarySchema
   }
 ];
-
-const syncURL = username => `http://${config.domain}/db/userdb-${Buffer.from(username, 'utf8').toString('hex')}`;
 
 // let doSync = true;
 // if (window.location.hash === '#nosync') doSync = false;
 
 async function _create(): Promise<Database> {
-  console.log('DatabaseService: creating database..');
   const db = await RxDB.create<Collections>({
     name: 'files',
     adapter: 'idb',
     queryChangeDetection: false
   });
-  console.log('DatabaseService: created database');
+
   (window as any)['db'] = db; // write to window for debugging
 
   // show leadership in title
@@ -120,7 +115,6 @@ let DB_INSTANCE: Database;
  * to ensure the database exists before the angular-app starts up
  */
 export async function initDatabase() {
-  console.log('initDatabase');
   DB_INSTANCE = await _create();
 }
 
@@ -128,6 +122,13 @@ export async function initDatabase() {
 export class DatabaseService {
   get db(): Database {
     return DB_INSTANCE;
+  }
+
+  constructor(private message: MessageService) {
+  }
+
+  private syncURL() {
+    return `http://${config.domain}/db/userdb-${Buffer.from(this.message.loginState.getValue(), 'utf8').toString('hex')}`;
   }
 
   findAllFile() {
@@ -160,7 +161,7 @@ export class DatabaseService {
 
   setSync(username) {
     const sync = {
-      remote: syncURL(username),
+      remote: this.syncURL(),
       waitForLeadership: true,   // (optional) [default=true] to save performance, the sync starts on leader-instance only
       options: {                 // sync-options (optional) from https://pouchdb.com/api.html#replication
         live: true,
