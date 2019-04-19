@@ -1,4 +1,4 @@
-<div class="definition selectable">
+<div class="definition selectable" [style.fontSize]="fontSize">
   <div *ngIf="type.name=='科林斯词典'">
     <ol *ngIf="res.collins">
       <li *ngFor="let entry of res.collins.entry">

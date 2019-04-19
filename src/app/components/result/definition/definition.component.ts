@@ -4,6 +4,7 @@ import {
   Input, OnInit, Output,
 } from '@angular/core';
 import {MdictService} from '../../../services/mdict.service';
+import {ConfigService} from '../../../services/config.service';
 
 @Component({
   selector: 'app-definition',
@@ -12,15 +13,18 @@ import {MdictService} from '../../../services/mdict.service';
 })
 export class DefinitionComponent implements OnInit {
   definition;
+  fontSize;
 
-  constructor(private mdict: MdictService) {
+  constructor(private mdict: MdictService,
+              private config: ConfigService) {
+    this.fontSize = config.store.get('fontSize');
   }
 
   @Input() type;
   @Input() res;
   @Input() word;
 
- async ngOnInit() {
+  async ngOnInit() {
     if (!this.type.web) this.definition = await this.mdict.getTranslation(this.type.name, this.word);
   }
 

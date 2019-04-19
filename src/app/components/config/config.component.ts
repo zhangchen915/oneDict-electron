@@ -6,6 +6,7 @@ import {MessageService} from '../../services/message.service';
 import {ActivatedRoute} from '@angular/router';
 import {MdictService} from '../../services/mdict.service';
 import {TtsService} from '../../services/tts.service';
+import {ConfigService} from '../../services/config.service';
 
 @Component({
   selector: 'app-config',
@@ -20,11 +21,12 @@ export class ConfigComponent implements OnInit, OnDestroy {
   fileInput;
   voices: SpeechSynthesisVoice[];
   selected;
-  fontSize = 16;
+  fontSize = this.config.store.get('fontSize');
 
   @ViewChild('file') file;
 
   constructor(private message: MessageService,
+              private config: ConfigService,
               private router: ActivatedRoute,
               private dbService: DatabaseService,
               private fb: FormBuilder,
@@ -90,7 +92,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
     });
 
     TtsService.tts = this.selected;
-
+    this.config.store.set('fontSize', this.fontSize);
     this.message.openSnackBar('已保存');
   }
 }

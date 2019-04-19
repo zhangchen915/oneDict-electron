@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {ConfigService} from './config.service';
 const Mdict = require('mdict-ts');
 import {DatabaseService} from './database.service';
 
@@ -9,7 +8,7 @@ import {DatabaseService} from './database.service';
 export class MdictService {
   private mdict = {};
 
-  constructor(private config: ConfigService, private dbService: DatabaseService) {
+  constructor(private dbService: DatabaseService) {
   }
 
   async init(file?) {
