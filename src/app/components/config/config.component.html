@@ -75,5 +75,12 @@
       <mat-slider [max]="32" [min]="14" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize">
       </mat-slider>
     </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>单词本</mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-glossary></app-glossary>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>

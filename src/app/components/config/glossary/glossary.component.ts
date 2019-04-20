@@ -1,12 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {DatabaseService} from '../../services/database.service';
-import {FormBuilder} from '@angular/forms';
-import {MessageService} from '../../services/message.service';
-import {ActivatedRoute} from '@angular/router';
+import {DatabaseService} from '../../../services/database.service';
+import {MessageService} from '../../../services/message.service';
 import {SelectionModel} from '@angular/cdk/collections';
 
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {GlossaryDocumentType} from '../../schemas/glossary.schema';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {GlossaryDocumentType} from '../../../schemas/glossary.schema';
+import {CardComponent} from '../../card/card.component';
 
 @Component({
   selector: 'app-glossary',
@@ -21,11 +20,9 @@ export class GlossaryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private message: MessageService, private router: ActivatedRoute,
-              private dbService: DatabaseService, private fb: FormBuilder) {
-    router.data.subscribe(e => {
-      message.sidenavIndex.next(e.state);
-    });
+  constructor(private message: MessageService,
+              private dbService: DatabaseService,
+              private dialog: MatDialog) {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -46,5 +43,13 @@ export class GlossaryComponent implements OnInit {
     this.dataSource = new MatTableDataSource(await this.dbService.getGlossary());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  async openDialog() {
+    this.dialog.open(CardComponent, {
+      width: '300px',
+      height: '300px',
+      data: await this.dbService.getGlossary(20)
+    });
   }
 }

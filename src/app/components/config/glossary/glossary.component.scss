@@ -1,15 +1,12 @@
 @import '~@angular/material/theming';
-@import "../../../styles";
-
-:host {
-  @include host
-}
+@import "../../../../styles";
 
 .glossary-content {
-  padding: 35px;
+  padding: 10px;
 
   .glossary-control {
     margin-bottom: 10px;
+
     button {
       margin-right: 5px;
     }

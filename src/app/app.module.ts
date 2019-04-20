@@ -23,8 +23,7 @@ import {LoginComponent} from './components/login/login.component';
 import {SearchComponent} from './components/search/search.component';
 import {CardComponent} from './components/card/card.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
-import {ConfigComponent} from './components/config/config.component';
-import {GlossaryComponent} from './components/glossary/glossary.component';
+import {TextbookComponent} from './components/textbook/textbook.component';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
@@ -35,8 +34,8 @@ import {LoginService} from './providers/login.service';
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateService} from './providers/translate.service';
 import {DatabaseService, initDatabase} from './services/database.service';
-import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {ResultModule} from './components/result/result.module';
+import {ConfigModule} from './components/config/config.module';
 import {TranslationModule} from './components/translate/translation.module';
 import config from '../../config';
 
@@ -56,9 +55,8 @@ export function tokenGetter() {
     SearchComponent,
     CardComponent,
     SidenavComponent,
-    ConfigComponent,
-    GlossaryComponent,
-    LoginComponent
+    TextbookComponent,
+    LoginComponent,
   ],
   entryComponents: [LoginComponent, CardComponent],
   imports: [
@@ -69,8 +67,8 @@ export function tokenGetter() {
     HttpClientModule,
     AppRoutingModule,
     MaterialModule,
-    MaterialFileInputModule,
     ResultModule,
+    ConfigModule,
     TranslationModule,
     ScrollToModule.forRoot(),
     JwtModule.forRoot({
