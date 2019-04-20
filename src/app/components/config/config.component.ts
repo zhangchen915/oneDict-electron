@@ -1,7 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {DatabaseService} from '../../services/database.service';
-import {FormBuilder, FormGroup} from '@angular/forms';
 import {MessageService} from '../../services/message.service';
 import {ActivatedRoute} from '@angular/router';
 import {MdictService} from '../../services/mdict.service';
@@ -17,7 +16,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
   step = 0;
   showList = [];
   hideList = [];
-  formDoc: FormGroup;
   fileInput;
   voices: SpeechSynthesisVoice[];
   selected;
@@ -29,7 +27,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
               private config: ConfigService,
               private router: ActivatedRoute,
               private dbService: DatabaseService,
-              private fb: FormBuilder,
               private mdict: MdictService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
@@ -68,10 +65,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.formDoc = this.fb.group({
-      basicfile: [{value: undefined, disabled: false}]
-    });
-
     this.dbService.db.file.find().exec().then(res => {
       res.forEach(e => {
         const json = e.toJSON();
