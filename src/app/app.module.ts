@@ -27,6 +27,7 @@ import {TextbookComponent} from './components/textbook/textbook.component';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
+import {DialogService} from './services/dialog.service';
 import {TtsService} from './services/tts.service';
 import {ResultApiService} from './providers/result.service';
 import {LoginService} from './providers/login.service';
@@ -94,7 +95,7 @@ export function tokenGetter() {
       deps: []
     },
     ElectronService, DatabaseService, MessageService, ConfigService,
-    MdictService, ResultApiService, TranslateService, LoginService, TtsService],
+    MdictService, ResultApiService, TranslateService, LoginService, TtsService, DialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ElectronService} from './providers/electron.service';
 import {TranslateService} from '@ngx-translate/core';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {AppConfig} from '../environments/environment';
 import {MessageService} from './services/message.service';
 import {Observable, Subscription} from 'rxjs';
 import {RouterAnimation} from './animations/router.animation';
@@ -10,10 +9,9 @@ import {map, pairwise, startWith} from 'rxjs/operators';
 import {getDaily} from './util';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
-import {LoginComponent} from './components/login/login.component';
-import {MatDialog} from '@angular/material';
 import {DatabaseService} from './services/database.service';
 import {LoginService} from './providers/login.service';
+import {DialogService} from './services/dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -32,8 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
               private message: MessageService,
               private result: ResultApiService,
               private mdict: MdictService,
-              private dialog: MatDialog,
               private user: LoginService,
+              private dialog: DialogService,
               private dbService: DatabaseService,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
@@ -79,11 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.message.openSnackBar('您已经登录', '退出')
         .then(snack => snack.onAction().subscribe(() => this.user.logout()));
     } else {
-      this.dialog.open(LoginComponent, {
-        width: '300px',
-        height: '300px',
-        data: {username: ''}
-      });
+      this.dialog.openLogin();
     }
   }
 
