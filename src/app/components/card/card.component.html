@@ -1,0 +1,15 @@
+<div class="card-container">
+  <div class="card">
+    <div>{{data[index].word}}</div>
+    <div>{{data[index].definition}}</div>
+  </div>
+  <div class="card-control">
+    <button mat-stroked-button>
+      不认识
+    </button>
+    <button mat-stroked-button (click)="know()">
+      <mat-icon>assignment_turned_in</mat-icon>
+      认识
+    </button>
+  </div>
+</div>
