@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import fileSchema, {FileCollection, FileDocument, FileDocumentType} from '../schemas/file.schema';
 import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
 import glossarySchema, {GlossaryCollection} from '../schemas/glossary.schema';
+import textbookSchema, {TextbookCollection} from '../schemas/textbook.schema';
 import RxDB from 'rxdb/plugins/core';
-// import modules
 import RxDBValidateModule from 'rxdb/plugins/validate';
 import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
 import RxDBReplicationModule from 'rxdb/plugins/replication';
@@ -32,6 +32,7 @@ interface Collections {
   file: FileCollection;
   history: HistoryCollection;
   glossary: GlossaryCollection;
+  textbook: TextbookCollection;
 }
 
 type Database = RxDatabase<Collections>;
@@ -46,6 +47,9 @@ const collections = [
   }, {
     name: 'glossary',
     schema: glossarySchema
+  }, {
+    name: 'textbook',
+    schema: textbookSchema,
   }
 ];
 
@@ -131,6 +135,19 @@ export class DatabaseService {
     return `http://${config.domain}/db/userdb-${Buffer.from(this.message.loginState.getValue(), 'utf8').toString('hex')}`;
   }
 
+  async creatTextbookDB(name) {
+    return this.db.textbook.sync({
+      remote: `http://${config.domain}/db/${name}`,
+      direction: {
+        push: false
+      },
+      options: {
+        live: false,
+        retry: true
+      }
+    }).complete$;
+  }
+
   findAllFile() {
     return this.db.file.find().where('use').gt(0).exec().then(
       res => res.map(e => e.toJSON()));
@@ -159,7 +176,26 @@ export class DatabaseService {
       res => res.map(e => e.toJSON()));
   }
 
-  setSync(username) {
+  async getTextbook(name, state = 0) {
+    let find = this.db.textbook.find();
+    if (state) find = find.limit(state);
+    return await find.exec().then(
+      res => res.map(e => e.toJSON()));
+  }
+
+  syncTextbook(textbook) {
+    this.db.textbook.sync({
+      remote: this.syncURL() + '-' + textbook,
+      waitForLeadership: true,
+      options: {
+        live: true,
+        retry: true
+      },
+      query: this.db.textbook.find().where('state').gte(0)
+    });
+  }
+
+  setSync() {
     const sync = {
       remote: this.syncURL(),
       waitForLeadership: true,   // (optional) [default=true] to save performance, the sync starts on leader-instance only
