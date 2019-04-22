@@ -19,7 +19,7 @@
         <mat-chip-list>
           <mat-chip *ngFor="let name of res.type">{{name}}</mat-chip>
         </mat-chip-list>
-        <div class="selectable">
+        <div class="selectable" [style.fontSize]="config.value.fontSize + 'px'">
           <p *ngFor="let tr of res.base">{{tr}}</p>
         </div>
       </div>

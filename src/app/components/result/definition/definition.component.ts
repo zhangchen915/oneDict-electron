@@ -13,11 +13,9 @@ import {ConfigService} from '../../../services/config.service';
 })
 export class DefinitionComponent implements OnInit {
   definition;
-  fontSize;
 
   constructor(private mdict: MdictService,
               private config: ConfigService) {
-    this.fontSize = config.store.get('fontSize') + 'px';
   }
 
   @Input() type;

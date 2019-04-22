@@ -19,7 +19,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
   fileInput;
   voices: SpeechSynthesisVoice[];
   selected;
-  fontSize = this.config.store.get('fontSize');
 
   @ViewChild('file') file;
 
@@ -85,7 +84,6 @@ export class ConfigComponent implements OnInit, OnDestroy {
     });
 
     TtsService.tts = this.selected;
-    this.config.store.set('fontSize', this.fontSize);
     this.message.openSnackBar('已保存');
   }
 }

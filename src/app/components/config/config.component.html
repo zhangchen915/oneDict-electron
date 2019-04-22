@@ -13,7 +13,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <mat-slide-toggle>剪贴板取词</mat-slide-toggle>
+      <mat-slide-toggle [checked]="config.value.copyBoard">剪贴板取词</mat-slide-toggle>
     </mat-expansion-panel>
 
     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
@@ -22,14 +22,14 @@
       </mat-expansion-panel-header>
 
       <div class="choose-file">
-          <mat-form-field>
-            <ngx-mat-file-input #file
-                                placeholder="请选择mdx字典文件"
-                                [(ngModel)]="fileInput"
-                                [accept]="'.mdx'"></ngx-mat-file-input>
-            <mat-icon matSuffix>folder</mat-icon>
-          </mat-form-field>
-          <button mat-stroked-button [disabled]="file.empty" (click)="addFile()">添加</button>
+        <mat-form-field>
+          <ngx-mat-file-input #file
+                              placeholder="请选择mdx字典文件"
+                              [(ngModel)]="fileInput"
+                              [accept]="'.mdx'"></ngx-mat-file-input>
+          <mat-icon matSuffix>folder</mat-icon>
+        </mat-form-field>
+        <button mat-stroked-button [disabled]="file.empty" (click)="addFile()">添加</button>
       </div>
 
       <div class="container">
@@ -71,14 +71,14 @@
       <mat-expansion-panel-header>
         <mat-panel-title>字体设置</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-icon [style.fontSize]="fontSize+'px'">format_size</mat-icon>
-      <mat-slider [max]="32" [min]="14" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize">
+      <mat-icon [style.fontSize]="config.value.fontSize+'px'">format_size</mat-icon>
+      <mat-slider [max]="32" [min]="14" [step]="1" [thumbLabel]="true" [(ngModel)]="config.value.fontSize">
       </mat-slider>
     </mat-expansion-panel>
 
     <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)">
       <mat-expansion-panel-header>
-        <mat-panel-title>单词本</mat-panel-title>
+        <mat-panel-title>单词本管理</mat-panel-title>
       </mat-expansion-panel-header>
       <app-glossary></app-glossary>
     </mat-expansion-panel>

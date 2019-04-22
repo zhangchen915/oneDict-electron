@@ -12,6 +12,7 @@ import {ResultApiService} from './providers/result.service';
 import {DatabaseService} from './services/database.service';
 import {LoginService} from './providers/login.service';
 import {DialogService} from './services/dialog.service';
+import {ConfigService} from './services/config.service';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
               private user: LoginService,
               private dialog: DialogService,
               private dbService: DatabaseService,
+              private config: ConfigService,
               public jwtHelper: JwtHelperService) {
     translate.setDefaultLang('en');
 
@@ -83,5 +85,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.config.save();
   }
 }

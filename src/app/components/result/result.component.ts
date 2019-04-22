@@ -2,6 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ResultApiService} from '../../providers/result.service';
 import {forkJoin} from 'rxjs';
 import {DatabaseService} from '../../services/database.service';
+import {ConfigService} from '../../services/config.service';
 
 @Component({
   selector: 'app-result',
@@ -22,6 +23,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   tabs = [];
 
   constructor(private api: ResultApiService,
+              private config: ConfigService,
               private dbService: DatabaseService,
   ) {
   }
