@@ -67,7 +67,7 @@ export class TextbookComponent implements OnInit {
     }
   }
 
-  async openDialog() {
-    this.dialog.openCard();
+  async review() {
+    this.dialog.openCard(await this.dbService.getTextbook(20));
   }
 }

@@ -3,15 +3,13 @@ import {MatDialog} from '@angular/material';
 import {LoginComponent} from '../components/login/login.component';
 import {MessageService} from './message.service';
 import {CardComponent} from '../components/card/card.component';
-import {DatabaseService} from './database.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
   constructor(private dialog: MatDialog,
-              private message: MessageService,
-              private dbService: DatabaseService,) {
+              private message: MessageService) {
   }
 
   openLogin() {
@@ -22,11 +20,12 @@ export class DialogService {
     });
   }
 
-  async openCard() {
+  openCard(data) {
+    if (!data.length) return this.message.openSnackBar('没有卡片');
     this.dialog.open(CardComponent, {
       width: '300px',
       height: '300px',
-      data: await this.dbService.getGlossary(20)
+      data,
     });
   }
 

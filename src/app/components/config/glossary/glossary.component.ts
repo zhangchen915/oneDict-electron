@@ -3,9 +3,9 @@ import {DatabaseService} from '../../../services/database.service';
 import {MessageService} from '../../../services/message.service';
 import {SelectionModel} from '@angular/cdk/collections';
 
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {GlossaryDocumentType} from '../../../schemas/glossary.schema';
-import {CardComponent} from '../../card/card.component';
+import {DialogService} from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-glossary',
@@ -22,7 +22,7 @@ export class GlossaryComponent implements OnInit {
 
   constructor(private message: MessageService,
               private dbService: DatabaseService,
-              private dialog: MatDialog) {
+              private dialog: DialogService) {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -46,10 +46,6 @@ export class GlossaryComponent implements OnInit {
   }
 
   async openDialog() {
-    this.dialog.open(CardComponent, {
-      width: '300px',
-      height: '300px',
-      data: await this.dbService.getGlossary(20)
-    });
+    this.dialog.openCard(await this.dbService.getGlossary(20));
   }
 }
