@@ -71,7 +71,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title>字体设置</mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-icon>format_size</mat-icon>
+      <mat-icon [style.fontSize]="fontSize+'px'">format_size</mat-icon>
       <mat-slider [max]="32" [min]="14" [step]="1" [thumbLabel]="true" [(ngModel)]="fontSize">
       </mat-slider>
     </mat-expansion-panel>

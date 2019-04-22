@@ -17,7 +17,7 @@ export class DefinitionComponent implements OnInit {
 
   constructor(private mdict: MdictService,
               private config: ConfigService) {
-    this.fontSize = config.store.get('fontSize');
+    this.fontSize = config.store.get('fontSize') + 'px';
   }
 
   @Input() type;
