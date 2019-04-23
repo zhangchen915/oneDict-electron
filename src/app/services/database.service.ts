@@ -142,7 +142,7 @@ export class DatabaseService {
 
   async creatTextbookDB(name) {
     return this.db.textbook.sync({
-      remote: `http://${config.domain}/db/${name}`,
+      remote: `http://${config.domain}/db/textbook-${name}`,
       direction: {
         push: false
       },
@@ -181,10 +181,12 @@ export class DatabaseService {
       res => res.map(e => e.toJSON()));
   }
 
-  async getTextbook(name, state = 0) {
-    let find = this.db.textbook.find();
-    if (state) find = find.limit(state);
-    return await find.exec().then(
+  async getTextbook(limit, gte = -1, lte = 5) {
+    if (gte > lte) return;
+    let find = this.db.textbook.find().where('state');
+    find = gte === lte ? find.eq(gte) : find.lte(lte).gte(gte);
+    // if (gte * lte !== -5) find = find.lte(lte).gte(gte);
+    return await find.limit(limit).exec().then(
       res => res.map(e => e.toJSON()));
   }
 

@@ -21,13 +21,15 @@ const schema: RxJsonSchema = {
       primary: true,
     },
     state: {
-      type: 'string',
+      type: 'number',
+      default: -1
     },
-    updateTime: {
-      type: 'string',
-    }
+    // updateTime: {
+    //   type: 'string',
+    //   default: ''
+    // }
   },
-  required: ['word']
+  required: ['word', 'state']
 };
 
 export default schema;

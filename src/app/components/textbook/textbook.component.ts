@@ -61,13 +61,13 @@ export class TextbookComponent implements OnInit {
 
   async ngOnInit() {
     if (this.textbook) {
-      this.dataSource = new MatTableDataSource(await this.dbService.getTextbook(this.textbook));
+      this.dataSource = new MatTableDataSource(await this.dbService.getTextbook(100));
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     }
   }
 
   async review() {
-    this.dialog.openCard(await this.dbService.getTextbook(20));
+    this.dialog.openCard(await this.dbService.getTextbook(20, -1, 4));
   }
 }
