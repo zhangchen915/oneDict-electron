@@ -82,5 +82,14 @@
       </mat-expansion-panel-header>
       <app-glossary></app-glossary>
     </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)">
+      <mat-expansion-panel-header>
+        <mat-panel-title>课本设置</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div>每日词数：{{config.value.reviewNumber}}</div>
+      <mat-slider [max]="50" [min]="5" [step]="5" [thumbLabel]="true"
+                  [(ngModel)]="config.value.reviewNumber"></mat-slider>
+    </mat-expansion-panel>
   </mat-accordion>
 </div>
