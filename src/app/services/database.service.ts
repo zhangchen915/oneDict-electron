@@ -3,6 +3,7 @@ import fileSchema, {FileCollection, FileDocument, FileDocumentType} from '../sch
 import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
 import glossarySchema, {GlossaryCollection} from '../schemas/glossary.schema';
 import textbookSchema, {TextbookCollection} from '../schemas/textbook.schema';
+import recordSchema, {RecordCollection} from '../schemas/record.schema';
 import RxDB from 'rxdb/plugins/core';
 import RxDBValidateModule from 'rxdb/plugins/validate';
 import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
@@ -33,6 +34,7 @@ interface Collections {
   history: HistoryCollection;
   glossary: GlossaryCollection;
   textbook: TextbookCollection;
+  record: RecordCollection;
 }
 
 type Database = RxDatabase<Collections>;
@@ -49,7 +51,10 @@ const collections = [
     schema: glossarySchema
   }, {
     name: 'textbook',
-    schema: textbookSchema,
+    schema: textbookSchema
+  }, {
+    name: 'record',
+    schema: recordSchema
   }
 ];
 
