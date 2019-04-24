@@ -4,11 +4,12 @@
     <div>{{data[index].definition}}</div>
   </div>
   <div class="card-control">
-    <button mat-stroked-button>
+    <button mat-stroked-button (click)="review(false)">
+      <mat-icon>close</mat-icon>
       不认识
     </button>
-    <button mat-stroked-button (click)="know()">
-      <mat-icon>assignment_turned_in</mat-icon>
+    <button mat-stroked-button (click)="review(true)">
+      <mat-icon>check</mat-icon>
       认识
     </button>
   </div>

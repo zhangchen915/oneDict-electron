@@ -186,8 +186,13 @@ export class DatabaseService {
     let find = this.db.textbook.find().where('state');
     find = gte === lte ? find.eq(gte) : find.lte(lte).gte(gte);
     // if (gte * lte !== -5) find = find.lte(lte).gte(gte);
-    return await find.limit(limit).exec().then(
+    if (limit) find = find.limit(limit);
+    return await find.exec().then(
       res => res.map(e => e.toJSON()));
+  }
+
+  review(word: string, state: number) {
+    this.db.textbook.find().where('name').eq(word).update({state});
   }
 
   syncTextbook(textbook) {
