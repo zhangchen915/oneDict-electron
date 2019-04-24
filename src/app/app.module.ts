@@ -29,18 +29,22 @@ import {ConfigService} from './services/config.service';
 import {MdictService} from './services/mdict.service';
 import {DialogService} from './services/dialog.service';
 import {TtsService} from './services/tts.service';
+import {AppInitService} from './services/init.service';
 import {ResultApiService} from './providers/result.service';
 import {LoginService} from './providers/login.service';
 
 import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
 import {TranslateService} from './providers/translate.service';
-import {DatabaseService, initDatabase} from './services/database.service';
+import {DatabaseService} from './services/database.service';
 import {ResultModule} from './components/result/result.module';
 import {ConfigModule} from './components/config/config.module';
 import {TranslationModule} from './components/translate/translation.module';
 import config from '../../config';
 
-// AoT requires an exported function for factories
+export function INIT(init: AppInitService) {
+  return () => init.Init();
+}
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -90,11 +94,12 @@ export function tokenGetter() {
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: () => initDatabase,
-      multi: true,
-      deps: []
+      useFactory: INIT,
+      deps: [AppInitService],
+      multi: true
     },
-    ElectronService, DatabaseService, MessageService, ConfigService,
+    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
+    AppInitService, ElectronService, DatabaseService, MessageService, ConfigService,
     MdictService, ResultApiService, TranslateService, LoginService, TtsService, DialogService],
   bootstrap: [AppComponent]
 })
