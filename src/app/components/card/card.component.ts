@@ -9,6 +9,7 @@ import {TextbookCollection} from '../../schemas/textbook.schema';
 })
 export class CardComponent implements OnInit, OnDestroy {
   index = 0;
+  progress = 0;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: Array<TextbookCollection>,
               private dbService: DatabaseService) {
@@ -18,6 +19,7 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   next() {
+    this.progress = Math.ceil((this.index + 1) * 100 / this.data.length);
     if (this.index === this.data.length - 1) return;
     this.index += 1;
   }

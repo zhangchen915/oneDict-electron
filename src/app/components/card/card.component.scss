@@ -5,4 +5,17 @@
   box-sizing: border-box;
   perspective: 800px;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+
+  .card {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    flex: 1;
+  }
+
+  .card-control {
+    margin: 0 auto;
+  }
 }
