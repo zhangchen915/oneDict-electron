@@ -25,7 +25,8 @@ export class CardComponent implements OnInit, OnDestroy {
   review(remember: boolean) {
     const current = this.data[this.index];
     let state = current.state;
-    if (state) state = remember ? state + 1 : state - 1;
+    state = remember ? state + 1 : state - 1;
+    if (state < 0) state = 0;
     this.dbService.review(current.word, state);
     this.next();
   }

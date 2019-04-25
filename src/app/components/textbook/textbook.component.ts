@@ -7,6 +7,7 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TextbookDocument, TextbookDocumentType} from '../../schemas/textbook.schema';
 import {DialogService} from '../../services/dialog.service';
+import {ConfigService} from '../../services/config.service';
 
 @Component({
   selector: 'app-textbook',
@@ -25,6 +26,7 @@ export class TextbookComponent implements OnInit {
   constructor(private message: MessageService,
               private router: ActivatedRoute,
               private dbService: DatabaseService,
+              private config: ConfigService,
               private dialog: DialogService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);
@@ -68,6 +70,6 @@ export class TextbookComponent implements OnInit {
   }
 
   async review() {
-    this.dialog.openCard(await this.dbService.getTextbook(20, -1, 4));
+    this.dialog.openCard(await this.dbService.getTextbook(this.config.value.reviewNumber, -1, 4));
   }
 }

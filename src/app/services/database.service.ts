@@ -67,7 +67,7 @@ export class DatabaseService {
   }
 
   review(word: string, state: number) {
-    this.db.textbook.find().where('name').eq(word).update({state});
+    this.db.textbook.findOne().where('word').eq(word).update({$set: {state}});
   }
 
   syncTextbook(textbook) {

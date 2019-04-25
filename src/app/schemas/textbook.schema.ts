@@ -18,7 +18,7 @@ const schema: RxJsonSchema = {
   properties: {
     word: {
       type: 'string',
-      primary: true,
+      default: ''
     },
     state: {
       type: 'number',

@@ -4,14 +4,16 @@ import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} 
 import glossarySchema, {GlossaryCollection} from '../schemas/glossary.schema';
 import textbookSchema, {TextbookCollection} from '../schemas/textbook.schema';
 import recordSchema, {RecordCollection} from '../schemas/record.schema';
+
+import {RxDatabase} from 'rxdb';
 import RxDB from 'rxdb/plugins/core';
 import RxDBValidateModule from 'rxdb/plugins/validate';
 import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
 import RxDBReplicationModule from 'rxdb/plugins/replication';
+import UpdatePlugin from 'rxdb/plugins/update';
 
 import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
-import {RxDatabase} from 'rxdb';
 
 // if (ENV === 'development') {
 //   // in dev-mode we show full error-messages
@@ -26,6 +28,7 @@ RxDB.plugin(RxDBLeaderElectionModule);
 RxDB.plugin(RxDBReplicationModule);
 RxDB.plugin(PouchdbAdapterHttp);
 RxDB.plugin(PouchdbAdapterIdb);
+RxDB.plugin(UpdatePlugin);
 
 interface Collections {
   file: FileCollection;
