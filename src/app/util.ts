@@ -11,3 +11,10 @@ export function getDaily() {
     throw new e;
   }
 }
+
+export function checkToday(): boolean {
+  const today = new Date().toDateString();
+  const res = today === localStorage.getItem('date');
+  if (!res) localStorage.setItem('date', today);
+  return res;
+}
