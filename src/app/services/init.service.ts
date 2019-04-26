@@ -1,3 +1,4 @@
+import {remote} from 'electron';
 import {Injectable} from '@angular/core';
 import fileSchema, {FileCollection, FileDocument, FileDocumentType} from '../schemas/file.schema';
 import historySchema, {HistoryCollection, HistoryDocument, HistoryDocumentType} from '../schemas/history.schema';
@@ -11,18 +12,17 @@ import RxDBValidateModule from 'rxdb/plugins/validate';
 import RxDBLeaderElectionModule from 'rxdb/plugins/leader-election';
 import RxDBReplicationModule from 'rxdb/plugins/replication';
 import UpdatePlugin from 'rxdb/plugins/update';
+import RxDBErrorMessagesModule from 'rxdb/plugins/error-messages';
+import RxDBSchemaCheckModule from 'rxdb/plugins/schema-check';
 
 import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
 import {checkToday, getJSONStorage} from '../util';
 
-// if (ENV === 'development') {
-//   // in dev-mode we show full error-messages
-//   RxDB.plugin(RxDBErrorMessagesModule);
-//
-//   // schema-checks should be used in dev-mode only
-//   RxDB.plugin(RxDBSchemaCheckModule);
-// }
+if (!remote.app.isPackaged) {
+  RxDB.plugin(RxDBErrorMessagesModule);
+  RxDB.plugin(RxDBSchemaCheckModule);
+}
 
 RxDB.plugin(RxDBValidateModule);
 RxDB.plugin(RxDBLeaderElectionModule);
@@ -70,20 +70,9 @@ async function _create(): Promise<Database> {
     queryChangeDetection: false
   });
 
-  (window as any)['db'] = db; // write to window for debugging
-
-  // show leadership in title
-  db.waitForLeadership()
-    .then(() => {
-      console.log('isLeader now');
-    });
-
-  // create collections
-  console.log('DatabaseService: create collections');
   await Promise.all(collections.map(colData => db.collection(colData)));
 
   // hooks
-  console.log('DatabaseService: add hooks');
   db.collections.file.preInsert((docObj: FileDocumentType) => {
     const name = docObj.name;
     return db.collections.file.findOne({name}).exec()
