@@ -6,8 +6,8 @@ import {HomeAnimation} from '../../animations/home.animation';
 import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
-import {getDaily} from '../../util';
 import {DatabaseService} from '../../services/database.service';
+import {AppInitService} from '../../services/init.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   listListener;
   animationState = '0';
   inputChange = new Subject();
-  daily: any;
   history = [];
   spell = {
     correct: false,
@@ -32,6 +31,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2,
               public message: MessageService,
+              public init: AppInitService,
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,
@@ -54,7 +54,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.daily = getDaily();
     this.history = await this.dbService.getHistory();
   }
 

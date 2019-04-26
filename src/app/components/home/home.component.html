@@ -29,12 +29,12 @@
       </mat-chip-list>
     </div>
 
-    <div class="daily-content" *ngIf="daily.picture2">
-      <img [src]="daily.picture2">
-      <div class="daily-blur center" [style.backgroundImage]="'url('+ daily.picture2 +')'"></div>
+    <div class="daily-content" *ngIf="init.daily.picture2">
+      <img [src]="init.daily.picture2">
+      <div class="daily-blur center" [style.backgroundImage]="'url('+ init.daily.picture2 +')'"></div>
       <div class="center">
-        <p>{{daily.content}}</p>
-        <p>{{daily.note}}</p>
+        <p>{{init.daily.content}}</p>
+        <p>{{init.daily.note}}</p>
       </div>
     </div>
   </div>

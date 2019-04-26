@@ -6,7 +6,6 @@ import {MessageService} from './services/message.service';
 import {Observable, Subscription} from 'rxjs';
 import {RouterAnimation} from './animations/router.animation';
 import {map, pairwise, startWith} from 'rxjs/operators';
-import {getDaily} from './util';
 import {MdictService} from './services/mdict.service';
 import {ResultApiService} from './providers/result.service';
 import {DatabaseService} from './services/database.service';
@@ -55,13 +54,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription = this.message.getSidenavState().subscribe(msg => this.sidenavState = msg);
     this.message.loginState.subscribe(name => this.username = name);
-
-    const daily = getDaily();
-    if (!daily || new Date().toDateString() !== new Date(daily.dateline).toDateString()) fetch('http://open.iciba.com/dsapi', {
-      headers: {'content-type': 'application/json'}
-    }).then(async res => {
-      localStorage.setItem('daily', await res.text());
-    });
 
     this.result.sougoTokenInit();
 

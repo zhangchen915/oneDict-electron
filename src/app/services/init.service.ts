@@ -14,6 +14,7 @@ import UpdatePlugin from 'rxdb/plugins/update';
 
 import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
 import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
+import {checkToday, getJSONStorage} from '../util';
 
 // if (ENV === 'development') {
 //   // in dev-mode we show full error-messages
@@ -121,11 +122,23 @@ async function _create(): Promise<Database> {
 @Injectable()
 export class AppInitService {
   public DB_INSTANCE;
+  daily;
 
   constructor() {
   }
 
   async Init() {
     this.DB_INSTANCE = await _create();
+
+    if (checkToday()) {
+      fetch('http://open.iciba.com/dsapi', {
+        headers: {'content-type': 'application/json'}
+      }).then(async res => {
+        this.daily = await res.text();
+        localStorage.setItem('daily', this.daily);
+      });
+    } else {
+      this.daily = getJSONStorage('daily');
+    }
   }
 }

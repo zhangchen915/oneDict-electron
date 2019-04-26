@@ -4,9 +4,9 @@ export function params(payload) {
   return searchParams.toString();
 }
 
-export function getDaily() {
+export function getJSONStorage(name: string) {
   try {
-    return JSON.parse(localStorage.getItem('daily'));
+    return JSON.parse(localStorage.getItem('name'));
   } catch (e) {
     throw new e;
   }
