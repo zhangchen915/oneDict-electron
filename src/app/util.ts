@@ -5,8 +5,10 @@ export function params(payload) {
 }
 
 export function getJSONStorage(name: string) {
+  const store = localStorage.getItem(name);
+  if (!store) return '';
   try {
-    return JSON.parse(localStorage.getItem('name'));
+    return JSON.parse(store);
   } catch (e) {
     throw new e;
   }
