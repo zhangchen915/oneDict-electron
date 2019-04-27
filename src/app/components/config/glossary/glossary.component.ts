@@ -5,7 +5,6 @@ import {SelectionModel} from '@angular/cdk/collections';
 
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {GlossaryDocumentType} from '../../../schemas/glossary.schema';
-import {DialogService} from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-glossary',
@@ -21,8 +20,7 @@ export class GlossaryComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private message: MessageService,
-              private dbService: DatabaseService,
-              private dialog: DialogService) {
+              private dbService: DatabaseService) {
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -43,9 +41,5 @@ export class GlossaryComponent implements OnInit {
     this.dataSource = new MatTableDataSource(await this.dbService.getGlossary());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  async openDialog() {
-    this.dialog.openCard(await this.dbService.getGlossary(20));
   }
 }

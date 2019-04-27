@@ -51,8 +51,10 @@ export class DatabaseService {
     }
   }
 
-  async getGlossary(skip: number = 0) {
-    return await this.db.glossary.find().exec().then(
+  async getGlossary(limit: number = 0) {
+    let find = this.db.glossary.find();
+    if (limit) find = find.limit(limit);
+    return await find.exec().then(
       res => res.map(e => e.toJSON()));
   }
 
