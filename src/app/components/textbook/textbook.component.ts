@@ -5,9 +5,10 @@ import {ActivatedRoute} from '@angular/router';
 import {SelectionModel} from '@angular/cdk/collections';
 
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {TextbookDocument, TextbookDocumentType} from '../../schemas/textbook.schema';
+import {TextbookDocumentType} from '../../schemas/textbook.schema';
 import {DialogService} from '../../services/dialog.service';
 import {ConfigService} from '../../services/config.service';
+import {getJSONStorage} from '../../util';
 
 @Component({
   selector: 'app-textbook',
@@ -19,6 +20,14 @@ export class TextbookComponent implements OnInit {
   displayedColumns: string[] = ['select', 'word', 'state', 'updateTime'];
   dataSource: MatTableDataSource<TextbookDocumentType>;
   selection = new SelectionModel<TextbookDocumentType>(true, []);
+
+  set reviewList(row) {
+    localStorage.setItem('reviewList', JSON.stringify({row, learned: []}));
+  }
+
+  get reviewList() {
+    return getJSONStorage('reviewList');
+  }
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -66,10 +75,12 @@ export class TextbookComponent implements OnInit {
       this.dataSource = new MatTableDataSource(await this.dbService.getTextbook(100));
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+
+      if (!this.reviewList) this.reviewList = await this.dbService.getTextbook(this.config.value.reviewNumber, -1, 4);
     }
   }
 
   async review() {
-    this.dialog.openCard(await this.dbService.getTextbook(this.config.value.reviewNumber, -1, 4));
+    this.dialog.openCard(this.reviewList);
   }
 }

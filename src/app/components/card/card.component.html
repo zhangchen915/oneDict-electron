@@ -1,13 +1,13 @@
 <div class="card-container">
   <mat-progress-bar mode="determinate" color="primary" [value]="progress"></mat-progress-bar>
   <div class="card">
-    <div>{{data[index].word}}</div>
-    <div>{{data[index].definition}}</div>
+    <div>{{row[index].word}}</div>
+    <div>{{row[index].definition}}</div>
   </div>
   <div class="card-control">
     <button mat-stroked-button (click)="review(false)">
       <mat-icon>close</mat-icon>
-      不认识
+      忘记
     </button>
     <button mat-stroked-button (click)="review(true)">
       <mat-icon>check</mat-icon>

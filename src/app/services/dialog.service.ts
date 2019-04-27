@@ -21,7 +21,7 @@ export class DialogService {
   }
 
   openCard(data) {
-    if (!data.length) return this.message.openSnackBar('没有卡片');
+    if (!data.row.length) return this.message.openSnackBar('没有要学习的卡片');
     this.dialog.open(CardComponent, {
       width: '300px',
       height: '300px',
