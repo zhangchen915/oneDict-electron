@@ -5,7 +5,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 
@@ -40,6 +40,7 @@ import {ResultModule} from './components/result/result.module';
 import {ConfigModule} from './components/config/config.module';
 import {TranslationModule} from './components/translate/translation.module';
 import config from '../../config';
+import {LoggingInterceptor} from './logging.interceptor';
 
 export function INIT(init: AppInitService) {
   return () => init.Init();
@@ -79,8 +80,8 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter,
-        whitelistedDomains: ['youdao.com', 'sogou.com', 'iciba.com'],
-        blacklistedRoutes: [config.domain]
+        whitelistedDomains: [config.domain],
+        blacklistedRoutes: ['youdao.com', 'sogou.com', 'iciba.com']
       }
     }),
     TranslateModule.forRoot({
