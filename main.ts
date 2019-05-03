@@ -1,7 +1,7 @@
 import {app, BrowserWindow, Menu, ipcMain} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
-import contextMenu from 'electron-context-menu';
+const contextMenu = require('electron-context-menu');
 
 const dictionary = require('dictionary-en-us');
 const nspell = require('nspell');
