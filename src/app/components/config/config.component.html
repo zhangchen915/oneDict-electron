@@ -13,7 +13,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <mat-slide-toggle [checked]="config.value.copyBoard">剪贴板取词</mat-slide-toggle>
+      <mat-slide-toggle [(ngModel)]="config.value.copyBoard" (change)="clipboard()">剪贴板取词</mat-slide-toggle>
     </mat-expansion-panel>
 
     <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">

@@ -6,6 +6,7 @@ import {ActivatedRoute} from '@angular/router';
 import {MdictService} from '../../services/mdict.service';
 import {TtsService} from '../../services/tts.service';
 import {ConfigService} from '../../services/config.service';
+import {ElectronService} from '../../providers/electron.service';
 
 @Component({
   selector: 'app-config',
@@ -23,6 +24,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   @ViewChild('file') file;
 
   constructor(private message: MessageService,
+              private electron: ElectronService,
               private config: ConfigService,
               private router: ActivatedRoute,
               private dbService: DatabaseService,
@@ -70,6 +72,11 @@ export class ConfigComponent implements OnInit, OnDestroy {
         json.use ? this.showList[json.use - 1] = json : this.hideList.push(json);
       });
     });
+  }
+
+  clipboard() {
+    const watch = this.electron.clipboardListen();
+    if (!this.config.value.copyBoard) watch.stop();
   }
 
   async ngOnDestroy() {
