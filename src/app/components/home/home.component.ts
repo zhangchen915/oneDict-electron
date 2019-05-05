@@ -7,7 +7,6 @@ import {Subject, timer} from 'rxjs';
 import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {DatabaseService} from '../../services/database.service';
-import {AppInitService} from '../../services/init.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   constructor(private renderer: Renderer2,
               public message: MessageService,
-              public init: AppInitService,
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,

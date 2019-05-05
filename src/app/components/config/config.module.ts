@@ -6,12 +6,13 @@ import {ConfigComponent} from './config.component';
 import {MaterialModule} from '../../material.module';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {FormsModule} from '@angular/forms';
-
+import {TtsService} from '../../services/tts.service';
 
 @NgModule({
   declarations: [ConfigComponent, GlossaryComponent],
   imports: [BrowserModule, MaterialModule, MaterialFileInputModule, FormsModule],
-  exports: [ConfigComponent]
+  exports: [ConfigComponent],
+  providers: [TtsService]
 })
 export class ConfigModule {
 }

@@ -4,16 +4,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 import {HttpClientModule, HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
-
-import {AppRoutingModule} from './app-routing.module';
-
-// NG Translate
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {ElectronService} from './providers/electron.service';
+import {AppRoutingModule} from './app-routing.module';
+import {ResultModule} from './components/result/result.module';
+import {ConfigModule} from './components/config/config.module';
+import {TranslationModule} from './components/translate/translation.module';
 import {JwtModule} from '@auth0/angular-jwt';
 
 import {AppComponent} from './app.component';
@@ -24,23 +22,17 @@ import {SearchComponent} from './components/search/search.component';
 import {CardComponent} from './components/card/card.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {TextbookComponent} from './components/textbook/textbook.component';
+
+import {ElectronService} from './providers/electron.service';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
-import {MdictService} from './services/mdict.service';
 import {DialogService} from './services/dialog.service';
-import {TtsService} from './services/tts.service';
 import {AppInitService} from './services/init.service';
-import {ResultApiService} from './providers/result.service';
 import {LoginService} from './providers/login.service';
-
-import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
-import {TranslateService} from './providers/translate.service';
 import {DatabaseService} from './services/database.service';
-import {ResultModule} from './components/result/result.module';
-import {ConfigModule} from './components/config/config.module';
-import {TranslationModule} from './components/translate/translation.module';
-import config from '../../config';
+
 import {LoggingInterceptor} from './logging.interceptor';
+import config from '../../config';
 
 export function INIT(init: AppInitService) {
   return () => init.Init();
@@ -76,7 +68,6 @@ export function tokenGetter() {
     ResultModule,
     ConfigModule,
     TranslationModule,
-    ScrollToModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter,
@@ -101,7 +92,7 @@ export function tokenGetter() {
     },
     {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
     AppInitService, ElectronService, DatabaseService, MessageService, ConfigService,
-    MdictService, ResultApiService, TranslateService, LoginService, TtsService, DialogService],
+    LoginService, DialogService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
