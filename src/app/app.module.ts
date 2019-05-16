@@ -18,7 +18,6 @@ import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
 import {HomeComponent} from './components/home/home.component';
 import {LoginComponent} from './components/login/login.component';
-import {SearchComponent} from './components/search/search.component';
 import {CardComponent} from './components/card/card.component';
 import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {TextbookComponent} from './components/textbook/textbook.component';
@@ -50,7 +49,6 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     HomeComponent,
-    SearchComponent,
     CardComponent,
     SidenavComponent,
     TextbookComponent,
