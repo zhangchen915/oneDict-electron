@@ -15,8 +15,6 @@ import UpdatePlugin from 'rxdb/plugins/update';
 import RxDBErrorMessagesModule from 'rxdb/plugins/error-messages';
 import RxDBSchemaCheckModule from 'rxdb/plugins/schema-check';
 
-import * as PouchdbAdapterHttp from 'pouchdb-adapter-http';
-import * as PouchdbAdapterIdb from 'pouchdb-adapter-idb';
 import {checkToday, getJSONStorage} from '../util';
 
 if (!remote.app.isPackaged) {
@@ -27,9 +25,9 @@ if (!remote.app.isPackaged) {
 RxDB.plugin(RxDBValidateModule);
 RxDB.plugin(RxDBLeaderElectionModule);
 RxDB.plugin(RxDBReplicationModule);
-RxDB.plugin(PouchdbAdapterHttp);
-RxDB.plugin(PouchdbAdapterIdb);
 RxDB.plugin(UpdatePlugin);
+RxDB.plugin(require('pouchdb-adapter-http'));
+RxDB.plugin(require('pouchdb-adapter-leveldb'));
 
 interface Collections {
   file: FileCollection;
