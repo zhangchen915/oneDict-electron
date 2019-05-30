@@ -31,6 +31,7 @@ function createWindow() {
     transparent: true,
     frame: false,
     webPreferences: {
+      nodeIntegration: true,
       webSecurity: false
     }
   });

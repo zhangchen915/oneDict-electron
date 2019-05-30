@@ -21,7 +21,6 @@ import {ConfigService} from './services/config.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   public sidenavState: boolean;
-  private subscription: Subscription;
   routeTrigger: Observable<object>;
   username;
 
@@ -52,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscription = this.message.getSidenavState().subscribe(msg => this.sidenavState = msg);
+    this.message.getSidenavState().subscribe(msg => this.sidenavState = msg);
     this.message.loginState.subscribe(name => this.username = name);
 
     this.result.sougoTokenInit();
@@ -76,7 +75,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.config.save();
   }
 }

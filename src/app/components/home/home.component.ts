@@ -30,8 +30,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('list') $list;
 
   constructor(private renderer: Renderer2,
+              private init: AppInitService,
               public message: MessageService,
-              public init: AppInitService,
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,

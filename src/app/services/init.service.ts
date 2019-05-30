@@ -109,7 +109,7 @@ async function _create(): Promise<Database> {
 @Injectable()
 export class AppInitService {
   public DB_INSTANCE;
-  daily;
+  public daily;
 
   constructor() {
   }
@@ -117,7 +117,7 @@ export class AppInitService {
   async Init() {
     this.DB_INSTANCE = await _create();
 
-    if (checkToday()) {
+    if (!checkToday()) {
       fetch('http://open.iciba.com/dsapi', {
         headers: {'content-type': 'application/json'}
       }).then(async res => {
