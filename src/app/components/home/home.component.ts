@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   inputChange = new Subject();
   history = [];
   spell = {
-    correct: false,
+    correct: true,
     suggest: []
   };
 
