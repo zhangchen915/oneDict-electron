@@ -29,8 +29,8 @@ export class TextbookComponent implements OnInit {
     return getJSONStorage('reviewList');
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   constructor(private message: MessageService,
               private router: ActivatedRoute,

@@ -21,7 +21,7 @@ export class ConfigComponent implements OnInit, OnDestroy {
   voices: SpeechSynthesisVoice[];
   selected;
 
-  @ViewChild('file') file;
+  @ViewChild('file', {static: false}) file;
 
   constructor(private message: MessageService,
               private electron: ElectronService,

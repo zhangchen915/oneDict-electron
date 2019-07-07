@@ -8,6 +8,7 @@ import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {DatabaseService} from '../../services/database.service';
 import {AppInitService} from '../../services/init.service';
+import {MatPaginator} from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     suggest: []
   };
 
-  @ViewChild('list') $list;
+  @ViewChild('list', {static: false}) $list;
 
   constructor(private renderer: Renderer2,
               private init: AppInitService,

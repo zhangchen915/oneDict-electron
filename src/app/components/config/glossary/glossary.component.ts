@@ -16,8 +16,8 @@ export class GlossaryComponent implements OnInit {
   dataSource: MatTableDataSource<GlossaryDocumentType>;
   selection = new SelectionModel<GlossaryDocumentType>(true, []);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   constructor(private message: MessageService,
               private dbService: DatabaseService) {
