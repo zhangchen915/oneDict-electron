@@ -44,6 +44,7 @@
     "@angular/material": "^8.0.2",
     "@auth0/angular-jwt": "^2.1.1",
     "@nicky-lenaers/ngx-scroll-to": "^2.0.0",
+    "cross-zip": "^2.1.5",
     "dictionary-en-us": "^2.1.1",
     "electron-context-menu": "^0.12.1",
     "electron-store": "^4.0.0",
