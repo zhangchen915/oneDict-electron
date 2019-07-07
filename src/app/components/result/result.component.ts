@@ -1,6 +1,5 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ResultApiService} from '../../providers/result.service';
-import {forkJoin} from 'rxjs';
 import {DatabaseService} from '../../services/database.service';
 import {ConfigService} from '../../services/config.service';
 
@@ -14,7 +13,7 @@ export class ResultComponent implements OnInit, OnDestroy {
   @Input()
   set word(word: string) {
     this._word = word;
-    if (word) this.getRes(word);
+    if (word) this.api.getDefinition(word).then(res => this.res = res);
   }
 
   res: any;
@@ -32,15 +31,6 @@ export class ResultComponent implements OnInit, OnDestroy {
     this.like = await this.dbService.inGlossary(this._word);
     this._like = this.like;
     this.tabs = await this.dbService.findAllFile();
-  }
-
-  async getRes(word) {
-    forkJoin(
-      this.api.youdao(word),
-      this.api.sougou(word)
-    ).subscribe(res => {
-      this.res = Object.assign(res[0], res[1]);
-    });
   }
 
   async ngOnDestroy() {

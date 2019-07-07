@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map, retry, tap} from 'rxjs/operators';
 import {params} from '../util';
+import {forkJoin} from 'rxjs';
 
 const crypto = require('crypto');
 
@@ -30,7 +31,7 @@ export class ResultApiService {
   constructor(private http: HttpClient) {
   }
 
-  youdao(word) {
+  private youdao(word) {
     return this.http.get('http://dict.youdao.com/jsonapi?' + params({
       q: word,
       dicts: {
@@ -68,11 +69,11 @@ export class ResultApiService {
       ));
   }
 
-  sougoTokenInit() {
+  public sougoTokenInit() {
     if (!localStorage.getItem('sougoToken')) this.updateSougoToken();
   }
 
-  updateSougoToken() {
+  private updateSougoToken() {
     return this.http.get('https://fanyi.sogou.com', {responseType: 'text'}).pipe(
       tap(html => {
           this.http.get(`https://dlweb.sogoucdn.com/translate/pc/static/js/app.${/js\/app\.([^.]+)/.exec(html)[1]}.js`,
@@ -85,7 +86,7 @@ export class ResultApiService {
       ));
   }
 
-  sougou(text) {
+  private sougou(text) {
     const from = 'auto';
     const to = 'zh-CHS';
     const md5 = crypto.createHash('md5');
@@ -119,6 +120,13 @@ export class ResultApiService {
         };
       })
     );
+  }
+
+  public async getDefinition(word: string) {
+    return await forkJoin([this.youdao(word), this.sougou(word)]
+    ).toPromise().then(res => {
+      return Object.assign(res[0], res[1]);
+    });
   }
 }
 

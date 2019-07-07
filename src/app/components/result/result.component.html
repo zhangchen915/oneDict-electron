@@ -9,7 +9,7 @@
         </div>
         <app-like [(like)]=like></app-like>
         <div class="phonetic">
-          <mat-chip-list>
+          <mat-chip-list *ngIf="res.oxford.phonetic.length">
             <mat-chip class="pointer" *ngFor="let name of res.oxford.phonetic" [audio]="name.filename">
               <img [src]="'../../../assets/images/'+name.type+'.svg'"/>
               {{name.text}}</mat-chip>
