@@ -54,7 +54,9 @@
     "nspell": "^2.1.2",
     "pouchdb-adapter-http": "^7.0.0",
     "pouchdb-adapter-idb": "^7.0.0",
-    "rxdb": "^8.2.1"
+    "rxdb": "^8.2.1",
+    "sqlite3": "^4.0.9",
+    "typeorm": "^0.2.18"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.801.0",
