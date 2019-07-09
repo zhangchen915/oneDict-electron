@@ -29,6 +29,7 @@ import {DialogService} from './services/dialog.service';
 import {AppInitService} from './services/init.service';
 import {LoginService} from './providers/login.service';
 import {DatabaseService} from './services/database.service';
+import {FileService} from './services/file.service';
 
 import {LoggingInterceptor} from './logging.interceptor';
 import config from '../../config';
@@ -90,7 +91,7 @@ export function tokenGetter() {
     },
     {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
     AppInitService, ElectronService, DatabaseService, MessageService, ConfigService,
-    LoginService, DialogService],
+    LoginService, DialogService, FileService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
