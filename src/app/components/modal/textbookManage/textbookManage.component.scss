@@ -1,0 +1,8 @@
+@import '~@angular/material/theming';
+@import "../../../../styles";
+
+.textbook-manage-content {
+  width: 100%;
+  padding: 35px;
+  background-image: linear-gradient(60deg, #fff1eb 0%, #ace0f9 100%);
+}

@@ -11,6 +11,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {AppRoutingModule} from './app-routing.module';
 import {ResultModule} from './components/result/result.module';
 import {ConfigModule} from './components/config/config.module';
+import {ModalModule} from './components/modal/modal.module';
 import {TranslationModule} from './components/translate/translation.module';
 import {JwtModule} from '@auth0/angular-jwt';
 
@@ -33,6 +34,7 @@ import {FileService} from './services/file.service';
 
 import {LoggingInterceptor} from './logging.interceptor';
 import config from '../../config';
+import {TextbookManageComponent} from './components/modal/textbookManage/textbookManage.component';
 
 export function INIT(init: AppInitService) {
   return () => init.Init();
@@ -55,7 +57,7 @@ export function tokenGetter() {
     TextbookComponent,
     LoginComponent,
   ],
-  entryComponents: [LoginComponent, CardComponent],
+  entryComponents: [LoginComponent, CardComponent, TextbookManageComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -67,6 +69,7 @@ export function tokenGetter() {
     ResultModule,
     ConfigModule,
     TranslationModule,
+    ModalModule,
     JwtModule.forRoot({
       config: {
         tokenGetter,

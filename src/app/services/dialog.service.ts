@@ -3,6 +3,7 @@ import {MatDialog} from '@angular/material';
 import {LoginComponent} from '../components/login/login.component';
 import {MessageService} from './message.service';
 import {CardComponent} from '../components/card/card.component';
+import {TextbookManageComponent} from '../components/modal/textbookManage/textbookManage.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,14 @@ export class DialogService {
       width: '300px',
       height: '300px',
       data,
+    });
+  }
+
+  openTextbookManage() {
+    this.dialog.open(TextbookManageComponent, {
+      width: '300px',
+      height: '300px',
+      data: {username: ''}
     });
   }
 
