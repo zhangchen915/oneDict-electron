@@ -8,7 +8,7 @@ import {debounce} from 'rxjs/operators';
 import {ActivatedRoute} from '@angular/router';
 import {DatabaseService} from '../../services/database.service';
 import {AppInitService} from '../../services/init.service';
-import {MatPaginator} from '@angular/material';
+import {OnlineDictionaryService} from '../../providers/onlineDictionary.service';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
               private mdict: MdictService,
               private suggest: SuggestService,
               private router: ActivatedRoute,
+              private online: OnlineDictionaryService,
               private dbService: DatabaseService) {
     router.data.subscribe(e => {
       message.sidenavIndex.next(e.state);

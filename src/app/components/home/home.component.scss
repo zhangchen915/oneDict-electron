@@ -62,6 +62,15 @@
           }
         }
       }
+
+      .online {
+        padding-top: 15px;
+        color: mat-color($mat-grey, 700);
+
+        .online-list button {
+          margin: 3px;
+        }
+      }
     }
   }
 

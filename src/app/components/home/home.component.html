@@ -9,14 +9,21 @@
       </mat-hint>
     </mat-form-field>
 
-    <div #list class="suggest-content">
-      <cdk-virtual-scroll-viewport *ngIf="animationState==='1' && spell.correct" itemSize="10" class="search-list">
+    <div #list class="suggest-content" *ngIf="animationState==='1'">
+      <cdk-virtual-scroll-viewport *ngIf="spell.correct" itemSize="10"
+                                   class="search-list">
         <div *cdkVirtualFor="let item of items" class="search-item pointer"
              [attr.data-partOfSpeech]="getPart(item)">{{item.key}}</div>
       </cdk-virtual-scroll-viewport>
+      <div *ngIf="!spell.correct" class="online">
+        <div>这好像并不是一个英文单词？去在线词典看看吧</div>
+        <div class="online-list">
+          <button mat-stroked-button *ngFor="let e of online.onlineList"
+                  (click)="online.onlineSearchJump(e,word)">{{e}}</button>
+        </div>
+      </div>
     </div>
   </div>
-
 
   <div class="result" *ngIf="animationState==='2'">
     <app-result [word]="word"></app-result>

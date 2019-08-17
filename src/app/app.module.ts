@@ -24,6 +24,7 @@ import {SidenavComponent} from './components/sidenav/sidenav.component';
 import {TextbookComponent} from './components/textbook/textbook.component';
 
 import {ElectronService} from './providers/electron.service';
+import {OnlineDictionaryService} from './providers/onlineDictionary.service';
 import {MessageService} from './services/message.service';
 import {ConfigService} from './services/config.service';
 import {DialogService} from './services/dialog.service';
@@ -93,7 +94,7 @@ export function tokenGetter() {
       multi: true
     },
     {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
-    AppInitService, ElectronService, DatabaseService, MessageService, ConfigService,
+    AppInitService, ElectronService, DatabaseService, MessageService, ConfigService, OnlineDictionaryService,
     LoginService, DialogService, FileService],
   bootstrap: [AppComponent]
 })
