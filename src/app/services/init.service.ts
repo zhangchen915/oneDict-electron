@@ -123,8 +123,8 @@ export class AppInitService {
       fetch('http://open.iciba.com/dsapi', {
         headers: {'content-type': 'application/json'}
       }).then(async res => {
-        this.daily = await res.text();
-        localStorage.setItem('daily', this.daily);
+        this.daily = await res.json();
+        localStorage.setItem('daily', JSON.stringify(this.daily));
       });
     } else {
       this.daily = getJSONStorage('daily');
