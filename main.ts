@@ -1,10 +1,12 @@
 import {app, BrowserWindow, Menu, ipcMain} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+
 const contextMenu = require('electron-context-menu');
 
-const dictionary = require('dictionary-en-us');
-const nspell = require('nspell');
+const dictionary = require('dictionary-en');
+const nSpell = require('nspell');
+const Mdict = require('mdict-ts');
 
 contextMenu({
   showSaveImageAs: true,
@@ -20,6 +22,7 @@ contextMenu({
 
 let win, serve;
 const args = process.argv.slice(1);
+const mdict = {};
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
@@ -32,6 +35,7 @@ function createWindow() {
     frame: false,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
       webSecurity: false
     }
   });
@@ -58,23 +62,45 @@ function createWindow() {
 
 try {
   // remove so we can register each time as we run the app.
-  app.removeAsDefaultProtocolClient('onedict');
+  app.removeAsDefaultProtocolClient('oneDict');
 
   if (!app.isPackaged && process.platform === 'win32') {
     // Set the path of electron.exe and your app.
     // These two additional parameters are only available on windows.
-    app.setAsDefaultProtocolClient('onedict', process.execPath, [path.resolve(process.argv[1])]);
+    app.setAsDefaultProtocolClient('oneDict', process.execPath, [path.resolve(process.argv[1])]);
   } else {
-    app.setAsDefaultProtocolClient('onedict');
+    app.setAsDefaultProtocolClient('oneDict');
   }
 
   dictionary((err, dict) => {
     if (err) throw err;
-    this.spell = nspell(dict);
+    this.spell = nSpell(dict);
   });
   ipcMain.on('getSpell', (event, word) => {
     event.returnValue = Object.assign(this.spell.spell(word), {
       suggest: this.spell.suggest(word)
+    });
+  });
+
+  ipcMain.on('initMdict', (event, file) => {
+    file.forEach(e => {
+      const {web, name = ''} = e;
+      if (web || mdict[name]) return;
+      mdict[name] = new Mdict(e.path);
+    });
+  });
+
+  ipcMain.on('getTranslation', (event, {name, query}) => {
+    mdict[name].getWordList(query).then(res => {
+
+      if (res.length) {
+        res.some(async e => {
+          if (e.word === query) {
+            event.returnValue = await mdict[name].getDefinition(e.offset);
+            return true;
+          }
+        });
+      }
     });
   });
 
